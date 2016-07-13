@@ -18,6 +18,11 @@ A framework which has some fundamental functions to serve for app(web-app) with 
 * see - http://wordpress46b1.org/2016/07/09/housemaid-job/
 * see - http://wordpress46b1.org/2016/07/13/xapp-framework/
 
+# HOW TO
+
+* access the index.html with "file://" scheme like "file:///C:/work/www/wordpress46b1/wp-content/plugins/xforum/tmp/xapp/index.html"
+ 
+
 # Coding Guide
 
 ## Template & Layout
