@@ -9,14 +9,19 @@ A framework which has some fundamental functions to serve for app(web-app) with 
 
 * see "### ONE PAGE APP" in xforum README.md
 
+
+
 # ITS
 
 * see 'housemaid' its on http://dev.withcenter.com
+
+
 
 # TODO
 
 * see - http://wordpress46b1.org/2016/07/09/housemaid-job/
 * see - http://wordpress46b1.org/2016/07/13/xapp-framework/
+
 
 # HOW TO
 
@@ -24,6 +29,7 @@ A framework which has some fundamental functions to serve for app(web-app) with 
  
 
 # Coding Guide
+
 
 ## Template & Layout
 
