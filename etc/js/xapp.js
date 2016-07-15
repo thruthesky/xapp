@@ -1,3 +1,33 @@
+/**
+ *
+ * XAPP Mini Framework
+ *
+ *      This mini framework has only a few functions. DON'T DO TOO MUCH THINGS.
+ *
+ * @note  What it does
+ *
+ *  - Ajax Query to Wordpress through XForum API.
+ *      => list, view, posting, editing, EndLess listing.
+ *
+ *
+ *
+ *
+ *
+ * @note  External Libraries
+ *
+ *      - jQuery
+ *      - underscore
+ *      - underscore.string
+ *      - bootstrap v4
+ *      - font-awesome
+ *
+ *
+ *
+ *
+ * @file xapp.js
+ *
+ * @type {{}}
+ */
 var xapp = {};
 var db = Lockr;
 
@@ -58,19 +88,33 @@ db.expired = function( id, seconds ) {
     var old_stamp = db.get( id + '_stamp', 0 );
     var new_stamp = Math.floor(Date.now() / 1000);
     old_stamp = parseInt( old_stamp ) + seconds;
-    if ( old_stamp < new_stamp ) {
+
+
+
+    if ( isNaN(old_stamp) || old_stamp < new_stamp ) {
         console.log( id + ' has expired' );
         return true;
     }
     else {
-        console.log( id + ' has cached until: ' + new Date( old_stamp * 1000 ).toString());
+        // console.log( id + ' has cached until: ' + new Date( old_stamp * 1000 ).toString());
         return false;
     }
 };
 
 
-xapp.get = function ( url, success, failure ) {
+xapp.get = function ( url, success, error ) {
+
+    $.ajax( {
+        url: url,
+        async: true,
+        success: success,
+        error: error
+    } );
+
+    /*
     var xhr = $.get( url );
+
+
     //noinspection JSUnresolvedFunction
     xhr
         .done( function( re ) {
@@ -84,11 +128,14 @@ xapp.get = function ( url, success, failure ) {
         .always( function() {
             //console.log('get always');
         });
+        */
 };
 
 
 xapp.doCache = function (o) {
-    console.log( 'going to CACHE for ' + o.id  );
+
+    console.log( 'going to CACHE for ' + o.id + ' URL: ' + o.url  );
+    console.log( o );
     this.get( o.url, function(re) {
         db.set ( o.id, re );
         db.setCache( o.id, re );
@@ -182,7 +229,6 @@ xapp.cache = function ( o ) {
         'failure' : function() {}
     };
 
-    o = $.extend( defaults, o );
 
     if ( typeof o.id == 'undefined' || o.id == '' ) {
         this.get( o.url, o.success, o.failure );
@@ -190,8 +236,11 @@ xapp.cache = function ( o ) {
     else {
         if ( o.expire == 0 ) xapp.doCache( o );
         else {
+
             // cache expired or not?
-            if ( db.expired( o.id, o.expire ) ) xapp.doCache( o );
+            if ( db.expired( o.id, o.expire ) ) {
+                xapp.doCache( o );
+            }
             else o.success ( db.get( o.id ) );
         }
     }
@@ -199,8 +248,45 @@ xapp.cache = function ( o ) {
 
 
 
+/**
+ *
+ * @param o
+ *
+ * @code  Example of getting
+ *
+ xapp.wp_get_categories({
+        'expire' : 86400 * 7,
+        'success' : function( re ) {
+            console.log(re);
+        },
+        'failure' : function( re ) {
+            alert('ERROR on getting categories');
+        }
+    });
+ *
+ * @endcode
+ */
+xapp.wp_get_categories = function ( o ) {
+    var defaults = {
+        id : 'wp_get_category',
+        url : url_wordpress + '?forum=api&action=get_categories',
+        expire : 86400 // cache for a day.
+    };
+    o  = $.extend( defaults, o );
 
 
+    xapp.cache( o );
+};
 
+/**
+ * This method does
+ *      1. WP_Query to the server
+ *      2. Gets all result of data ( post, comments, meta information, author information, and every ting that related with the post )
+ *      3. Pass the data to success callback.
+ * @param o
+ */
+xapp.wp_query = function (o) {
+
+};
 
 
