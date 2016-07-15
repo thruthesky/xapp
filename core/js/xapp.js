@@ -31,6 +31,26 @@
 var xapp = {};
 var db = Lockr;
 
+
+xapp.init = function() {
+    $('body').on('click', '[api]', function(e) {
+        e.preventDefault();
+        var $this = $(this);
+//        console.info( $this.prop('href') );
+//        console.info( $this.attr('api') );
+        xapp.move( $this.attr('api') );
+
+    } );
+};
+$(function() {
+    xapp.init();        // call xapp.init when DOM is ready.
+});
+
+
+xapp.move = function( api ) {
+    location.href = 'index.html?' + api;
+};
+
 /**
  *
  * Saves cache data and stamp with the input 'id'.
@@ -269,7 +289,7 @@ xapp.cache = function ( o ) {
 xapp.wp_get_categories = function ( o ) {
     var defaults = {
         id : 'wp_get_category',
-        url : url_wordpress + '?forum=api&action=get_categories',
+        url : this.server_url + '?forum=api&action=get_categories',
         expire : 86400 // cache for a day.
     };
     o  = $.extend( defaults, o );
@@ -290,3 +310,59 @@ xapp.wp_query = function (o) {
 };
 
 
+
+xapp.bootstrap = {};
+xapp.bs = xapp.bootstrap;
+/**
+ *
+ * Returns 'Bootstrap' list group markup.
+ *
+ * @use when you want to display list-group data.
+ * @param data - boostrap list group data.
+ *      - data.title is the title of the list-group
+ *      - data.lists is the list of the list-group.
+ *          Each of lists must have text and href.
+ */
+xapp.bs.list_group_linked_items = function ( data ) {
+
+//    console.log( data );
+
+    var m = '' +
+        '<div class="list-group">' +
+        '   <a class="list-group-item active" href="javascript:;">' + data.title + '</a>' +
+        '';
+
+    if ( typeof data.lists != 'undefined' && data.lists.length ) {
+        for ( var i in data.lists ) {
+            var item = data.lists[i];
+            m += '<a class="list-group-item" api="'+item.api+'" href="'+item.href+'">'+item.text+'</a>';
+        }
+    }
+
+    m += '</div>';
+
+    return m;
+};
+
+/**
+ *
+ * Gets categories data and convert it into 'list-group-item'.
+ *
+ * @use when you want to display xforum into a list group.
+ *
+ * @param data
+ * @returns {Array}
+ */
+xapp.convert_categories_into_list_group_item = function ( data ) {
+    var lists = [];
+
+    for ( var i in data ) {
+        var item = {};
+        item.text = data[i].cat_name;
+        item.href = this.server_url + '?forum=list&slug=' + data[i].slug;
+        item.api = "action=list&slug=" + data[i].slug;
+        lists.push( item );
+    }
+
+    return lists;
+};
