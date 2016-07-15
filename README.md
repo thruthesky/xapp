@@ -19,8 +19,8 @@ A framework which has some fundamental functions to serve for app(web-app) with 
 
 # TODO
 
-* see - http://wordpress46b1.org/2016/07/09/housemaid-job/
-* see - http://wordpress46b1.org/2016/07/13/xapp-framework/
+* see - https://docs.google.com/document/d/1xObimH0kQsx1ixUGRT7HTVKIL27l0bEjIKpNa16_mFc/edit
+* see - 
 
 
 # HOW TO
@@ -47,5 +47,13 @@ A framework which has some fundamental functions to serve for app(web-app) with 
     Just redirect to (or reload) index.html with the PROTOCOL
 
 
+
+## Cache
+
+If you have no 'id' in parameter, then it is just the same as xapp.get()
+
+    xapp.cache( { 'url' : '...' } );
+
+It just does the same as $.get()
 
 

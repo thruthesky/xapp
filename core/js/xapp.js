@@ -33,14 +33,8 @@ var db = Lockr;
 
 
 xapp.init = function() {
-    $('body').on('click', '[api]', function(e) {
-        e.preventDefault();
-        var $this = $(this);
-//        console.info( $this.prop('href') );
-//        console.info( $this.attr('api') );
-        xapp.move( $this.attr('api') );
-
-    } );
+    xapp.parse_query_string();
+    xapp.hook_api();
 };
 $(function() {
     xapp.init();        // call xapp.init when DOM is ready.
@@ -50,6 +44,45 @@ $(function() {
 xapp.move = function( api ) {
     location.href = 'index.html?' + api;
 };
+
+/**
+ *
+ */
+xapp.parse_query_string = function () {
+    this.qv = {};
+    this.query = '';
+    var splits = location.href.split('?');
+    if ( splits.length > 1 ) {
+        this.query = splits[1];
+        parse_str( this.query, this.qv);
+    }
+    //console.log(this.qv);
+};
+/**
+ * Returns the $_GET variable.
+ * @param name
+ */
+xapp.in = function( name ) {
+    if (_.isEmpty( this.qv ) ) return null;
+    if ( typeof this.qv[ name ] == 'undefined' ) return null;
+    return this.qv[ name ];
+
+};
+
+
+
+xapp.hook_api = function () {
+
+    $('body').on('click', '[api]', function(e) {
+        e.preventDefault();
+        var $this = $(this);
+//        console.info( $this.prop('href') );
+//        console.info( $this.attr('api') );
+        xapp.move( $this.attr('api') );
+
+    } );
+};
+
 
 /**
  *
@@ -124,6 +157,7 @@ db.expired = function( id, seconds ) {
 
 xapp.get = function ( url, success, error ) {
 
+    console.log('xapp.get() : ' + url);
     $.ajax( {
         url: url,
         async: true,
@@ -153,9 +187,9 @@ xapp.get = function ( url, success, error ) {
 
 
 xapp.doCache = function (o) {
-
-    console.log( 'going to CACHE for ' + o.id + ' URL: ' + o.url  );
-    console.log( o );
+    //console.log( 'xapp.doCache() : Going to CACHE for ' + o.id + ' URL: ' + o.url  );
+    //console.log( o );
+    console.log( 'xapp.doCache() : ', o);
     this.get( o.url, function(re) {
         db.set ( o.id, re );
         db.setCache( o.id, re );
@@ -240,21 +274,28 @@ xapp.doCache = function (o) {
  * @endcode
  *
  *
+ * @attention 2016-07-15, 'expire' is set to 0.
+ *
+ *
  */
 xapp.cache = function ( o ) {
 
     var defaults = {
-        'expire': 600,
+        'expire': 0,
         'success' : function() {},
         'failure' : function() {}
     };
 
 
+    o  = $.extend( defaults, o );
+
     if ( typeof o.id == 'undefined' || o.id == '' ) {
         this.get( o.url, o.success, o.failure );
     }
     else {
-        if ( o.expire == 0 ) xapp.doCache( o );
+        if ( o.expire == 0 ) {
+            xapp.doCache( o );
+        }
         else {
 
             // cache expired or not?
@@ -306,7 +347,13 @@ xapp.wp_get_categories = function ( o ) {
  * @param o
  */
 xapp.wp_query = function (o) {
-
+    var defaults = {
+        url : this.server_url,
+        forum : 'api'
+    };
+    o = $.extend( defaults, o );
+    //console.log(o);
+    xapp.cache( o );
 };
 
 
@@ -360,9 +407,39 @@ xapp.convert_categories_into_list_group_item = function ( data ) {
         var item = {};
         item.text = data[i].cat_name;
         item.href = this.server_url + '?forum=list&slug=' + data[i].slug;
-        item.api = "action=list&slug=" + data[i].slug;
+        item.api = "action=post_list&slug=" + data[i].slug;
         lists.push( item );
     }
 
     return lists;
+};
+
+
+/**
+ *
+ *
+ * Returns bootstrap list-group markup.
+ *
+ *
+ * @param data
+ */
+xapp.convert_posts_into_list_group_custom_content = function ( data ) {
+    var m = '';
+    m += '<div class="list-group">';
+    m += '<a href="#" class="list-group-item active">';
+    m += '  <h4 class="list-group-item-heading">' + this.in('slug') + '</h4>';
+    m += '  <p class="list-group-item-text">' + 'forum list' + ', page no:</p>';
+    m += '</a>';
+    for ( var i in data ) {
+        var item = '';
+        item += '<a href="#" class="list-group-item">';
+        item += '   <h4 class="list-group-item-heading">' + data[i].post_title + '</h4>';
+        item += '   <p class="list-group-item-text">' + data[i].post_content + '</p>';
+        item += '</a>';
+        m += item;
+    }
+    m += '</div>';
+    return m;
+
+
 };

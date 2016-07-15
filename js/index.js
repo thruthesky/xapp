@@ -14,13 +14,7 @@
 
 
 
-/**
- *      D E F A L U L T  Variables
- */
-
-$(function(){
-
-    xapp.server_url = "http://work.org/wordpress/";
+function display_forum_list() {
 
     xapp.wp_get_categories({
         'expire' : 86400 * 7,
@@ -37,6 +31,41 @@ $(function(){
             alert('ERROR on getting categories');
         }
     });
+
+}
+function display_action() {
+    var query = {
+        url: xapp.server_url + '?forum=api&' + xapp.query,
+        posts_per_page : 4,
+        page : 1,
+        expire : 0,
+        success : function( re ) {
+            console.log( re );
+            var m = xapp.convert_posts_into_list_group_custom_content( re.data );
+            layout.main().prepend( m );
+        },
+        'failure' : function ( re ) {
+            alert('ERROR on failre');
+        }
+    };
+    xapp.wp_query( query );
+}
+/**
+ *      D E F A L U L T  Variables
+ */
+
+$(function(){
+
+    xapp.server_url = "http://work.org/wordpress/";
+
+    var action = xapp.in('action');
+
+    if ( action ) {
+        display_action();
+    }
+    else {
+        display_forum_list();
+    }
 
 
     console.log('index.js $(function() { ... }); finished.')
