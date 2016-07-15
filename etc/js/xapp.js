@@ -1,7 +1,6 @@
 var xapp = {};
 var db = Lockr;
 
-
 /**
  *
  * Saves cache data and stamp with the input 'id'.
@@ -197,5 +196,11 @@ xapp.cache = function ( o ) {
         }
     }
 };
+
+
+
+
+
+
 
 
