@@ -37,20 +37,15 @@ xapp.bs = xapp.bootstrap;
 
 
 xapp.start = function () {
-    var action = xapp.in('action');
-    if ( action == 'post_list' ) {
-        var query = {
-            url: xapp.server_url + '?forum=api&' + xapp.query,
-            posts_per_page : 4,
-            page : 1,
-            expire : 0,
-            success : this.callback_post_list,
-            'failure' : function ( re ) {
-                alert('ERROR on failre');
-            }
-        };
+    if ( this.isFront() ) xapp.callback_front_page();
+    else if ( this.isPostList() ) {
+        var query = xapp.post_list_query_args( 0 );
         xapp.wp_query( query );
     }
+    else {
+        alert("No route to go");
+    }
+
 };
 xapp.init = function() {
     xapp.parse_query_string();
@@ -60,7 +55,35 @@ $(function() {
     xapp.init();        // call xapp.init when DOM is ready.
 });
 
-
+xapp.isFront = function() {
+    var action = xapp.in('action');
+    return _.isEmpty( action );
+};
+xapp.isPostList = function() {
+    return xapp.in('action') == 'post_list';
+};
+/**
+ *
+ * 게시판의 글을 서버로 부터 추출한다.
+ *
+ * - 이 함수는 정형화(활용도가 고정)되어져 있어서 따로 커스터마이징을 할 필요가 없다.
+ *
+ *
+ * @param page - page no. what page of content ( post ) should be displayed?
+ */
+xapp.post_list_query_args = function ( page ) {
+    var id = xapp.query + '_' + page;
+    var query = {
+        'id' : id,
+        url: xapp.server_url + '?forum=api&' + xapp.query + '&page=' + page + '&posts_per_page=5',
+        expire : 60,
+        success : this.callback_post_list,
+        'failure' : function ( re ) {
+            alert('ERROR on failre');
+        }
+    };
+    return query;
+};
 xapp.move = function( api ) {
     location.href = 'index.html?' + api;
 };

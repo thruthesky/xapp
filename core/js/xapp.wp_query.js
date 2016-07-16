@@ -29,7 +29,6 @@ xapp.wp_get_categories = function ( o ) {
     };
     o  = $.extend( defaults, o );
 
-
     xapp.cache( o );
 };
 
@@ -46,7 +45,7 @@ xapp.wp_query = function (o) {
         forum : 'api'
     };
     o = $.extend( defaults, o );
-    //console.log(o);
+//    console.log(o);
     xapp.cache( o );
 };
 

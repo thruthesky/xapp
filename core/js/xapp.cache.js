@@ -187,6 +187,8 @@ xapp.cache = function ( o ) {
 
             // cache expired or not?
             if ( db.expired( o.id, o.expire ) ) {
+
+
                 xapp.doCache( o );
             }
             else o.success ( db.get( o.id ) );

@@ -73,6 +73,7 @@ xapp.convert_categories_into_list_group_item = function ( data ) {
 xapp.convert_posts_into_list_group_custom_content = function ( data ) {
     var category = data.category;
     var posts = data.posts;
+    if ( _.isEmpty(posts) ) return xapp.endless_no_more_posts();
     var m = '';
     m += '<div class="list-group">';
     m += '<a href="#" class="list-group-item active">';

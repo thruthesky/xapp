@@ -17,18 +17,23 @@ xapp.endless_page = 0;
             xapp.endless_in_loading = true;
             var o = xapp.callback_endless_cache_args( xapp.endless_page );
 
-            console.log( o );
+            if ( o ) {
+                console.log( o );
 
-            /**
-             *
-             * Load more data.
-             *
-             *      - show loader icon
-             *      - get data from server
-             *      - display it.
-             *      - hide loader icon.
-             */
-            xapp.cache( o );
+                /**
+                 *
+                 * Load more data.
+                 *
+                 *      - show loader icon
+                 *      - get data from server
+                 *      - display it.
+                 *      - hide loader icon.
+                 */
+                xapp.cache( o );
+            }
+            else {
+
+            }
         }
     });
 }());
