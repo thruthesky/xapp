@@ -32,9 +32,25 @@ var xapp = {};
 var db = Lockr;
 
 
+xapp.start = function () {
+    var action = xapp.in('action');
+    if ( action == 'post_list' ) {
+        var query = {
+            url: xapp.server_url + '?forum=api&' + xapp.query,
+            posts_per_page : 4,
+            page : 1,
+            expire : 0,
+            success : this.callback_post_list,
+            'failure' : function ( re ) {
+                alert('ERROR on failre');
+            }
+        };
+        xapp.wp_query( query );
+    }
+};
 xapp.init = function() {
     xapp.parse_query_string();
-    xapp.hook_api();
+    xapp.bind_api();
 };
 $(function() {
     xapp.init();        // call xapp.init when DOM is ready.
@@ -70,15 +86,27 @@ xapp.in = function( name ) {
 };
 
 
+xapp.process_api = function ( api_query ) {
 
-xapp.hook_api = function () {
+    var qs = {};
+    parse_str( api_query, qs );
+
+    if ( qs.action == 'post_list' ) {
+        xapp.move( api_query );
+    }
+    else {
+        xapp.move( api_query );
+    }
+
+};
+xapp.bind_api = function () {
 
     $('body').on('click', '[api]', function(e) {
         e.preventDefault();
         var $this = $(this);
-//        console.info( $this.prop('href') );
-//        console.info( $this.attr('api') );
-        xapp.move( $this.attr('api') );
+
+
+        xapp.process_api( $this.attr('api') );
 
     } );
 };
@@ -424,17 +452,24 @@ xapp.convert_categories_into_list_group_item = function ( data ) {
  * @param data
  */
 xapp.convert_posts_into_list_group_custom_content = function ( data ) {
+    var category = data.category;
+    var posts = data.posts;
     var m = '';
     m += '<div class="list-group">';
     m += '<a href="#" class="list-group-item active">';
-    m += '  <h4 class="list-group-item-heading">' + this.in('slug') + '</h4>';
-    m += '  <p class="list-group-item-text">' + 'forum list' + ', page no:</p>';
+    m += '  <h4 class="list-group-item-heading">' + category['cat_name'] + '</h4>';
+    m += '  <p class="list-group-item-text">' +
+            '<div class="posts">'+ category['count'] +'</div>' +
+            '<div class="description">'+category['category_description']+'</div>' +
+            '</p>';
     m += '</a>';
-    for ( var i in data ) {
+    for ( var i in posts ) {
+        var post = posts[i];
         var item = '';
-        item += '<a href="#" class="list-group-item">';
-        item += '   <h4 class="list-group-item-heading">' + data[i].post_title + '</h4>';
-        item += '   <p class="list-group-item-text">' + data[i].post_content + '</p>';
+        var url = post.guid;
+        item += '<a href="'+url+'" api="action=post_view" class="list-group-item">';
+        item += '   <h4 class="list-group-item-heading">' + post.post_title + '</h4>';
+        item += '   <p class="list-group-item-text">' + post.post_content + '</p>';
         item += '</a>';
         m += item;
     }

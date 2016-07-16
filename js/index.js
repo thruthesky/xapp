@@ -33,6 +33,7 @@ function display_forum_list() {
     });
 
 }
+/*
 function display_action() {
     var query = {
         url: xapp.server_url + '?forum=api&' + xapp.query,
@@ -50,21 +51,29 @@ function display_action() {
     };
     xapp.wp_query( query );
 }
+*/
 /**
  *      D E F A L U L T  Variables
  */
-
 $(function(){
 
     xapp.server_url = "http://work.org/wordpress/";
+    xapp.callback_post_list = function( re ) {
+        console.log( re );
+        var m = xapp.convert_posts_into_list_group_custom_content( re.data );
+        layout.main().prepend( m );
+    };
+    xapp.start();
+
 
     var action = xapp.in('action');
 
-    if ( action ) {
-        display_action();
+    if ( ! action ) {
+        display_forum_list();
+        //display_action();
     }
     else {
-        display_forum_list();
+        //display_forum_list();
     }
 
 

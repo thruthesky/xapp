@@ -3,11 +3,15 @@
 A framework which has some fundamental functions to serve for app(web-app) with the backend of xforum. 
 
 
-# IMPORTANT THING TO KNOW
+
+
+# IMPORTANT THING TO KNOW / TO CONSIDER
 
 * It only works with xforum.
 
 * see "### ONE PAGE APP" in xforum README.md
+
+* Try to put 'a' tag as much possible. Even though search bots cannot understand javascript and they are not able to load more on endless page, it is worth to give a link.
 
 
 
