@@ -97,6 +97,9 @@ xapp.process_api = function ( api_query ) {
     if ( qs.action == 'post_list' ) {
         xapp.move( api_query );
     }
+    else if ( qs.action == 'post_view' ) {
+
+    }
     else {
         xapp.move( api_query );
     }

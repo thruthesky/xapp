@@ -33,6 +33,8 @@ function display_forum_list() {
     });
 
 }
+
+
 /*
 function display_action() {
     var query = {
@@ -58,10 +60,40 @@ function display_action() {
 $(function(){
 
     xapp.server_url = "http://work.org/wordpress/";
+    xapp.server_url = "http://dev.withcenter.com/wordpress/";
     xapp.callback_post_list = function( re ) {
         console.log( re );
         var m = xapp.convert_posts_into_list_group_custom_content( re.data );
         layout.main().prepend( m );
+    };
+    /**
+     * No more data left on server.
+     *      - display no more data on bottom.
+     */
+    xapp.callback_endless_no_more_content = function () {
+
+    };
+    xapp.callback_endless_in_loading = function () {
+
+    };
+    /**
+     *
+     * Must return the parameta of xapp.cache() to get data from server.
+     *
+     *
+     *
+     */
+    xapp.callback_endless_cache_args = function ( page ) {
+        var o = {
+            'expire' : 60 * 25,
+            'success' : function ( re ) {
+                console.log("sucess of endless loading");
+            },
+            'failure' : function( re ) {
+                console.log("Failed on Endless Loading ...");
+            }
+        };
+        return o;
     };
     xapp.start();
 
