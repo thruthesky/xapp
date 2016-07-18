@@ -1,0 +1,42 @@
+.post-list-group {
+
+    margin-bottom: 1em;
+}
+
+.post-list-group-meta {
+    margin-bottom: 1em;
+    padding: .4em;
+    background-color: #c8d0da;
+}
+
+.post-list-group-content {
+}
+
+
+.post-list-group-content .post {
+    margin-bottom: 1em;
+    padding: .4em;
+    background-color: #ebf1ea;
+
+}
+
+
+
+
+.post-list-group .post form .buttons {
+    display:none;
+}
+
+.post-list-group .post form textarea {
+    width: 100%;
+    height: 38px;
+}
+
+
+.post-list-group .post form.selected textarea {
+    height: 120px;
+}
+
+.post-list-group .post form.selected .buttons {
+    display:block;
+}
