@@ -61,9 +61,13 @@ $(function(){
         console.log( re );
         var m = xapp.convert_posts_into_list_group_custom_content( re.data );
         layout.main().append( m );
+
+
+
         setTimeout(function() {
             xapp.callback_endless_finish_loading();
-        }, 2);
+            callback_post_list_add_show_more(re.data);
+        }, 20);
     };
 
 

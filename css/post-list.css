@@ -12,14 +12,15 @@
 .post-list-group-content {
 }
 
-
 .post-list-group-content .post {
     margin-bottom: 1em;
     padding: .4em;
     background-color: #ebf1ea;
-
 }
 
+.post .post-content img {
+    max-width: 100%;
+}
 
 
 
@@ -40,3 +41,32 @@
 .post-list-group .post form.selected .buttons {
     display:block;
 }
+
+
+
+
+#main .post-title h4 {
+    height: 1em;
+    overflow: hidden;
+}
+
+#main .post-content {
+    line-height: 1.4em;
+    max-height: 5.6em;
+    overflow: hidden;
+}
+
+
+/* THIS IS FOR WHAT?
+#main .post.open .post-title h4 {
+    height: auto;
+    overflow: auto;
+}
+
+
+#main .post.open .post-content {
+    max-height: none;
+    overflow: auto;
+}
+
+*/
