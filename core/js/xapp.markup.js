@@ -67,33 +67,84 @@ xapp.convert_categories_into_list_group_item = function ( data ) {
  *
  * Returns bootstrap list-group markup.
  *
+ * @note post wrapper must be a tag for seo purpose.
  *
  * @param data
  */
 xapp.convert_posts_into_list_group_custom_content = function ( data ) {
     var category = data.category;
     var posts = data.posts;
-    if ( _.isEmpty(posts) ) return xapp.endless_no_more_posts();
+    var page = data.in['page'];
+    if (_.isEmpty( page )) page = 1;
+    if ( _.isEmpty(posts) ) {
+        xapp.endless_set_no_more_posts();
+        return xapp.callback_endless_no_more_posts();
+    }
     var m = '';
-    m += '<div class="list-group">';
-    m += '<a href="#" class="list-group-item active">';
-    m += '  <h4 class="list-group-item-heading">' + category['cat_name'] + '</h4>';
-    m += '  <p class="list-group-item-text">' +
-        '<div class="posts">'+ category['count'] +'</div>' +
-        '<div class="description">'+category['category_description']+'</div>' +
-        '</p>';
-    m += '</a>';
+    m += '<div class="post-list-group" page="'+page+'">';
+
+    m += '  <div class="post-list-group-meta">';
+    m += '      <h4 class="list-group-item-heading">' + category['cat_name'] + '</h4>';
+    m += '      <p class="list-group-item-text">' +
+        '           <div class="meta">Page: '+page+', No. of Posts : '+ category['count'] +'</div>' +
+        '           <div class="description">'+category['category_description']+'</div>' +
+        '           <div class="buttons">[TOP] [WRITE]</div>' +
+        '       </p>';
+    m += '  </div>';
+
+    m += '  <div class="post-list-group-content">';
+
     for ( var i in posts ) {
         var post = posts[i];
-        var item = '';
+
         var url = post.guid;
-        item += '<a href="'+url+'" api="action=post_view" class="list-group-item">';
-        item += '   <h4 class="list-group-item-heading">' + post.post_title + '</h4>';
-        item += '   <p class="list-group-item-text">' + post.post_content + '</p>';
-        item += '</a>';
+        var item = '' +
+            '<div class="post">';
+        item += '       <a href="'+url+'" api="action=post_view" class="post-title">';
+        item += '          <h4>' + post.post_title + '</h4>';
+        item += '       </a>';
+        item += '       <section class="post-content">' + post.post_content + '</section>';
+        item += xapp.markup_comment_form();
+
+        item += '</div>';
+
         m += item;
     }
+    m += '  </div>';
+
+
     m += '</div>';
     return m;
 
+};
+
+
+xapp.markup_comment_form = function() {
+    var m = '' +
+        '<form>' +
+        '' +
+        '' +
+        '   <table>' +
+        '       <tr valign="top">' +
+        '           <td>' +
+        '' +
+        '               <i class="fa fa-camera fa-2x"></i>' +
+        '           </td>' +
+        '           <td width="99%">' +
+        '               <textarea></textarea>' +
+        '           </td>' +
+        '       </tr>' +
+        '       <tr>' +
+        '           <td></td>' +
+        '           <td class="buttons">' +
+        '               <input type="submit" value="Submit">' +
+        '               <button type="button">Cancel</button>' +
+        '           </td>' +
+        '       </tr>' +
+        '   </table>' +
+        '' +
+        '' +
+        '</form>' +
+        '';
+    return m;
 };

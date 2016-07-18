@@ -73,17 +73,19 @@ xapp.isPostList = function() {
  */
 xapp.post_list_query_args = function ( page ) {
     var id = xapp.query + '_' + page;
+    page = parseInt( page ) + 1;
     var query = {
         'id' : id,
-        url: xapp.server_url + '?forum=api&' + xapp.query + '&page=' + page + '&posts_per_page=5',
+        url: xapp.server_url + '?forum=api&' + xapp.query + '&page=' + page + '&posts_per_page=4',
         expire : 60,
-        success : this.callback_post_list,
+        success : this.callback_endless_post_list,
         'failure' : function ( re ) {
             alert('ERROR on failre');
         }
     };
     return query;
 };
+
 xapp.move = function( api ) {
     location.href = 'index.html?' + api;
 };

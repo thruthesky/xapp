@@ -23,23 +23,45 @@
             </div>
         </nav>
     </header>
-    <div class="content">
-        <aside class="left">
-            <p>aside.left</p>
-        </aside>
-        <div id="main">
-            div#main
+    <div class="content page-content container-fluid">
+        <div class="row">
+            <aside class="left col-xs-12 col-sm-12 col-md-3 col-xl-2">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-question fa-stack-1x fa-inverse"></i>
+                </span>
+                <div class="card">
+                    <h3 class="card-header">Left Card Featured</h3>
+                    <div class="card-block">
+                        <h4 class="card-title">Special title treatment</h4>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </aside>
+            <div id="main" class="col-xs-12 col-sm-12 col-md-9 col-xl-8">
+            </div>
+
+            <aside class="right col-xs-12 col-sm-12 col-md-12 col-xl-2">
+                <p>aside.right</p>
+
+                <div class="card">
+                    <h3 class="card-header">Right Card Featured</h3>
+                    <div class="card-block">
+                        <h4 class="card-title">Special title treatment</h4>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </aside>
         </div>
     </div>
-    <aside class="right">
-        <p>aside.right</p>
-    </aside>
-    <footer>
-        <nav class="navbar navbar-fixed-bottom navbar-light bg-faded">
-            <a class="navbar-brand" href="#">Fixed bottom</a>
-        </nav>
-    </footer>
-</section>
+    <footer></footer>
+</div>
 
 <script src="core/js/jquery-2.2.4.min.js"></script>
 <script src="core/js/js.cookie.js"></script>

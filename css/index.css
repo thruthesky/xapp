@@ -1,0 +1,25 @@
+body > section > header { }
+body > section > .content.page-content { }
+body > section > footer { }
+
+
+
+#main .post-title h4 {
+    height: 1em;
+    overflow: hidden;
+}
+#main .post-content {
+    line-height: 1.4em;
+    max-height: 4.2em;
+    overflow: hidden;
+}
+
+
+#main .post.open .post-title h4 {
+    height: auto;
+    overflow: auto;
+}
+#main .post.open .post-content {
+    max-height: none;
+    overflow: auto;
+}

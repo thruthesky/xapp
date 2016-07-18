@@ -57,26 +57,34 @@ $(function(){
      *
      * @param re
      */
-    xapp.callback_post_list = function( re ) { // Callback for display post data on device.
+    xapp.callback_endless_post_list = function( re ) { // Callback for display post data on device.
         console.log( re );
         var m = xapp.convert_posts_into_list_group_custom_content( re.data );
         layout.main().append( m );
+        setTimeout(function() {
+            xapp.callback_endless_finish_loading();
+        }, 2);
     };
+
+
+    xapp.callback_endless_begin_loading = function() {
+        layout.main().append('<i class="post-list-loader fa fa-spinner fa-pulse fa-3x fa-fw"></i>');
+        xapp.endless_in_process_loading = true;
+    };
+    xapp.callback_endless_finish_loading = function() {
+        layout.main().find('.post-list-loader').remove();
+        xapp.endless_in_process_loading = false;
+    };
+
     /**
      * (해당 게시판에서) Endless 로 데이터를 전송 받았는데, 게시물이 더 이상 존재 하지 않을 때 호출 된다.
      */
-    xapp.endless_no_more_posts = function () {
+    xapp.callback_endless_no_more_posts = function () {
         layout.main().append( "<h2>No more posts</h2>");
     };
-    /**
-     * No more data left on server.
-     *      - display no more data on bottom.
-     */
-    xapp.callback_endless_no_more_content = function () {
 
-    };
     xapp.callback_endless_in_loading = function () {
-
+        console.log("callback_endless_in_loading");
     };
     /**
      *
