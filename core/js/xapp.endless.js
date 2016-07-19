@@ -1,3 +1,7 @@
+/**
+ * 
+ * @type {number}
+ */
 xapp.endless_trigger_distance_from_bottom = 300;
 xapp.endless_page = 0;
 xapp.endless_in_loading = function() {

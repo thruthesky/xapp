@@ -1,21 +1,27 @@
-.post-list-group {
 
+.page-content {
+    padding: .4em;
+}
+
+.post-list-group {
     margin-bottom: 1em;
 }
 
 .post-list-group-meta {
     margin-bottom: 1em;
     padding: .4em;
-    background-color: #c8d0da;
+    background-color: #d5dde8;
 }
 
 .post-list-group-content {
+
 }
 
 .post-list-group-content .post {
     margin-bottom: 1em;
     padding: .4em;
     background-color: #ebf1ea;
+    word-break: break-all;
 }
 
 .post .post-content img {
@@ -45,28 +51,13 @@
 
 
 
-#main .post-title h4 {
+.page-content-main .post-title h4 {
     height: 1em;
     overflow: hidden;
 }
 
-#main .post-content {
+.page-content-main .post-content {
     line-height: 1.4em;
     max-height: 5.6em;
     overflow: hidden;
 }
-
-
-/* THIS IS FOR WHAT?
-#main .post.open .post-title h4 {
-    height: auto;
-    overflow: auto;
-}
-
-
-#main .post.open .post-content {
-    max-height: none;
-    overflow: auto;
-}
-
-*/

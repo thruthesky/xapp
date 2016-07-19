@@ -1,3 +1,5 @@
+post_list = xapp.post_list = {};
+
 $(function() {
 
     $('body').on('click', ".post-list-group-content .post form", function() {
@@ -20,7 +22,7 @@ $(function() {
 });
 
 
-function callback_post_list_add_show_more(data) {
+post_list.callback_add_show_more = function (data) {
 
     ///;
     $(".post-list-group[page='"+data.in['page']+"']").find('.post').each(function(index, element){
@@ -33,9 +35,9 @@ function callback_post_list_add_show_more(data) {
          * if the height of content is over-wrapped.
          */
         if ( $content[0].scrollHeight > $content.innerHeight()) {
-            //$content.css('background-color', 'red')
+            $content.css('background-color', '#efe9e9');
             $content.after("<div class='show-more'>Show More</div>");
         }
     });
     ///;
-}
+};

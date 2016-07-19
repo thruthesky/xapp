@@ -33,7 +33,9 @@ var xapp = {};
 var db = Lockr;
 xapp.bootstrap = {};
 xapp.bs = xapp.bootstrap;
-
+xapp.cacheOptions = {};
+xapp.cacheOptions.expire = 1200;
+xapp.local_url = 'index.html?';
 
 
 xapp.start = function () {
@@ -77,7 +79,7 @@ xapp.post_list_query_args = function ( page ) {
     var query = {
         'id' : id,
         url: xapp.server_url + '?forum=api&' + xapp.query + '&page=' + page + '&posts_per_page=4',
-        expire : 60,
+        expire : xapp.cacheOptions.expire,
         success : this.callback_endless_post_list,
         'failure' : function ( re ) {
             alert('ERROR on failre');
@@ -87,7 +89,7 @@ xapp.post_list_query_args = function ( page ) {
 };
 
 xapp.move = function( api ) {
-    location.href = 'index.html?' + api;
+    location.href = xapp.local_url + api;
 };
 
 /**
@@ -136,8 +138,6 @@ xapp.bind_api = function () {
     $('body').on('click', '[api]', function(e) {
         e.preventDefault();
         var $this = $(this);
-
-
         xapp.process_api( $this.attr('api') );
 
     } );

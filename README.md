@@ -24,7 +24,22 @@ A framework which has some fundamental functions to serve for app(web-app) with 
 # TODO
 
 * see - https://docs.google.com/document/d/1xObimH0kQsx1ixUGRT7HTVKIL27l0bEjIKpNa16_mFc/edit
-* see - 
+* xapp.markup_xxxx 을 markup = xapp.markup 으로 하고, 함수를 분리한다.
+
+
+# INSTALLATION
+
+Add cors in nginx.conf ( nginx 에 아래를 추가해서 cors 를 모두 무시하도록 한다. )
+
+
+
+    	location / {
+    		add_header 'Access-Control-Allow-Origin' '*';
+    		add_header 'Access-Control-Allow-Credentials' 'true';
+    		add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+    		add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+    	}
+
 
 
 # HOW TO
@@ -33,6 +48,15 @@ A framework which has some fundamental functions to serve for app(web-app) with 
  
 
 # Coding Guide
+
+
+## CALLBACKS
+
+* By using callbacks, you can separate and capsulise code blocks.
+
+    * For instance, you can put all the layout works in layout.js using callbacks.
+    
+
 
 
 ## Template & Layout
@@ -61,3 +85,14 @@ If you have no 'id' in parameter, then it is just the same as xapp.get()
 It just does the same as $.get()
 
 
+
+
+# Cycle
+
+xapp.start() ==> if is front page()
+ 
+    yes ==>
+    
+    no ==> xapp.wp_query() ==> xapp.cache() ==> 
+    
+    
