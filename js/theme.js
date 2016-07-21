@@ -27,5 +27,19 @@ $(function(){
 
     xapp.start();
 
-    console.log('index.js $(function() { ... }); finished.')
+    console.log('index.js $(function() { ... }); finished.');
+
+
+
+
+    /// TEST ...
+    auto_show_write_forum();
+
 });
+
+
+function auto_show_write_forum() {
+    setTimeout(function(){
+        $('.post-list-page-header .post').click();
+    }, 1000);
+}

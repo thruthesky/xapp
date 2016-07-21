@@ -91,6 +91,10 @@ xapp.post_list_query_args = function ( page ) {
 xapp.move = function( api ) {
     location.href = xapp.local_url + api;
 };
+xapp.reload = xapp.refresh = function () {
+    location.reload( true );
+};
+
 
 /**
  *
@@ -147,9 +151,54 @@ xapp.get = function ( url, success, error ) {
     console.log('xapp.get() : ' + url);
     $.ajax( {
         url: url,
-        async: true,
+        // async: true,
+        cache: false,
         success: success,
         error: error
     } );
 };
+
+
+/**
+ *
+ *
+ * @code
+ *
+ *  xapp.alert("POST Success", "You just have posted...", xapp.reload);
+ *
+ * @endcode
+ */
+xapp.alert = function( title, content, callback ) {
+
+    var m = '' +
+        '<div class="xapp-alert modal fade" tabindex="-1" role="dialog" aria-labelledby="ModalLabeled" aria-hidden="true">' +
+        '   <div class="modal-dialog modal-sm">' +
+        '       <div class="modal-content">' +
+        '           <div class="modal-header">' +
+        '               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+        '               <h4 class="modal-title" id="gridModalLabel">'+title+'</h4>' +
+        '           </div>' +
+        '           <div class="modal-body">' +
+            content +
+        '           </div>' +
+        '           <div class="modal-footer">' +
+        '               <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>' +
+        '           </div>' +
+        '       </div>' +
+        '   </div>' +
+        '</div>' +
+        '';
+    $('body').append( m );
+    $('.xapp-alert').modal('show');
+    function handler_xapp_alert_close(e) {
+        $('.xapp-alert').remove();
+        if ( typeof callback == 'function' ) callback();
+                //$('.xapp-alert').off('hidden.bs.modal', handler_xapp_alert_close);
+        console.log("un-bind for close() .... " + (new Date).toString() );
+    }
+    $('.xapp-alert').on('hidden.bs.modal', handler_xapp_alert_close);
+
+};
+
+
 

@@ -4,6 +4,9 @@
  * @type {{}}
  */
 
+var markup = xapp.markup = {};
+
+
 
 
 
@@ -72,27 +75,21 @@ xapp.convert_categories_into_list_group_item = function ( data ) {
  * @param data
  */
 xapp.convert_posts_into_list_group_custom_content = function ( data ) {
-    var category = data.category;
     var posts = data.posts;
-    var page = data.in['page'];
-    if (_.isEmpty( page )) page = 1;
+    var page = get_page_no(data.in['page']);
     if ( _.isEmpty(posts) ) {
         xapp.endless_set_no_more_posts();
         return xapp.callback_endless_no_more_posts();
     }
+    var slug = data.in['slug'];
     var m = '';
-    m += '<div class="post-list-group" page="'+page+'">';
+    m += '<div class="post-list-page" slug="'+slug+'" page="'+page+'">';
 
-    m += '  <div class="post-list-group-meta">';
-    m += '      <h4 class="list-group-item-heading">' + category['cat_name'] + '</h4>';
-    m += '      <p class="list-group-item-text">' +
-        '           <div class="meta">Page: '+page+', No. of Posts : '+ category['count'] +'</div>' +
-        '           <div class="description">'+category['category_description']+'</div>' +
-        '           <div class="buttons">[TOP] [WRITE]</div>' +
-        '       </p>';
-    m += '  </div>';
+    // template
+    m += markup.get_post_list_page_header(data);
 
-    m += '  <div class="post-list-group-content">';
+
+    m += '  <div class="post-list-page-content">';
 
     for ( var i in posts ) {
         var post = posts[i];
@@ -146,5 +143,55 @@ xapp.markup_comment_form = function() {
         '' +
         '</form>' +
         '';
+    return m;
+};
+
+
+markup.get_post_list_page_header = function ( data ) {
+    var category = data.category;
+    var page = get_page_no(data.in['page']);
+    var m = '';
+    m += '  <div class="post-list-page-header">';
+    m += '      <h4 class="list-group-item-heading">' + category['cat_name'] + '</h4>';
+    m += '      <p class="list-group-item-text">' +
+        '           <div class="meta">Page: '+page+', No. of Posts : '+ category['count'] +'</div>' +
+        '           <div class="description">'+category['category_description']+'</div>' +
+        '           <div class="buttons">' +
+        '               <button class="post btn btn-secondary">POST</button>' +
+        '               <button class="top btn btn-secondary">TOP</button>' +
+        '           </div>' +
+        '       </p>';
+    m += '  </div>';
+    return m;
+};
+
+
+markup.get_write_form = function ( $this ) {
+
+    var $header = $this.closest( '.post-list-page-header' );
+    var $page = $header.parent();
+    var page_no = $page.attr('page');
+    var slug = $page.attr('slug');
+
+    var m = '' +
+        '<div class="post-write-form" page-no="'+page_no+'">' +
+        '   <form>' +
+        '       <input type="hidden" name="do" value="post_edit_submit">' +
+        '       <input type="hidden" name="response" value="ajax">' +
+        '       <input type="hidden" name="slug" value="'+slug+'">' +
+        '       <input type="hidden" name="session_id" value="">' +
+        '       <input type="hidden" name="session_password" value="">' +
+        '       <input type="text" name="title" value="" placeholder="Input title">' +
+        '       <div>' +
+        '           <textarea name="content"></textarea>' +
+        '       </div>' +
+        '       <button type="button" class="submit btn btn-secondary btn-sm">SUBMIT</button>' +
+        '       <button type="button" class="cancel btn btn-secondary btn-sm">CANCEL</button>' +
+        '   </form>' +
+        '' +
+        '' +
+        '' +
+        '';
+
     return m;
 };

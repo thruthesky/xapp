@@ -3,21 +3,21 @@
     padding: .4em;
 }
 
-.post-list-group {
+.post-list-page {
     margin-bottom: 1em;
 }
 
-.post-list-group-meta {
+.post-list-page-header {
     margin-bottom: 1em;
     padding: .4em;
     background-color: #d5dde8;
 }
 
-.post-list-group-content {
+.post-list-page-content {
 
 }
 
-.post-list-group-content .post {
+.post-list-page-content .post {
     margin-bottom: 1em;
     padding: .4em;
     background-color: #ebf1ea;
@@ -30,21 +30,21 @@
 
 
 
-.post-list-group .post form .buttons {
+.post-list-page .post form .buttons {
     display:none;
 }
 
-.post-list-group .post form textarea {
+.post-list-page .post form textarea {
     width: 100%;
     height: 38px;
 }
 
 
-.post-list-group .post form.selected textarea {
+.post-list-page .post form.selected textarea {
     height: 120px;
 }
 
-.post-list-group .post form.selected .buttons {
+.post-list-page .post form.selected .buttons {
     display:block;
 }
 

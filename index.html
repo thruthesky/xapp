@@ -25,8 +25,16 @@
         </nav>
     </header>
     <div class="content page-content container-fluid">
+
         <div class="row">
             <aside class="left col-xs-12 col-sm-12 col-md-3 col-xl-2">
+
+                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                </fb:login-button>
+                ..
+                <div id="status">
+                </div>
+                ..
                 <span class="fa-stack fa-lg">
                   <i class="fa fa-circle fa-stack-2x"></i>
                   <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
@@ -35,6 +43,7 @@
                   <i class="fa fa-circle fa-stack-2x"></i>
                   <i class="fa fa-question fa-stack-1x fa-inverse"></i>
                 </span>
+
                 <div class="card">
                     <h3 class="card-header">Left Card Featured</h3>
                     <div class="card-block">
@@ -69,6 +78,8 @@
 
 <script src="core/js/jquery-2.2.4.min.js"></script>
 <script src="core/js/js.cookie.js"></script>
+<script src="core/bootstrap/tether.min.js"></script>
+<script src="core/bootstrap/bootstrap.min-2016-07-13.js"></script>
 <script src="core/js/underscore.string.min.js"></script>
 <script src="core/js/underscore-1.8.3.min.js"></script>
 <script src="core/js/lockr.js"></script>
@@ -78,10 +89,11 @@
 <script src="core/js/xapp.markup.js"></script>
 <script src="core/js/xapp.wp_query.js"></script>
 <script src="core/js/xapp.endless.js"></script>
+<script src="core/js/xapp.function.js"></script>
 <script src="core/js/xapp.callback.js"></script>
-<!--script src="js/facebook.js"></script-->
-<script src="core/js/xapp.layout.js"></script>
-<script src="js/post-list.js"></script>
+<script src="core/js/xapp.element.js"></script>
+<script src="core/js/xapp.post-list.js"></script>
+<script src="js/facebook.js"></script>
 <script src="js/theme.js"></script>
 </body>
 </html>

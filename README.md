@@ -25,6 +25,9 @@ A framework which has some fundamental functions to serve for app(web-app) with 
 
 * see - https://docs.google.com/document/d/1xObimH0kQsx1ixUGRT7HTVKIL27l0bEjIKpNa16_mFc/edit
 * xapp.markup_xxxx 을 markup = xapp.markup 으로 하고, 함수를 분리한다.
+* Facebook Login API is for web for now. It uses cookie. it wouldn't work on app since it is web app and using cookie.
+    * you need to get it for app version.
+    
 
 
 # INSTALLATION
@@ -50,13 +53,25 @@ Add cors in nginx.conf ( nginx 에 아래를 추가해서 cors 를 모두 무시
 # Coding Guide
 
 
-## CALLBACKS
+## CALLBACKS AND Overriding
+
 
 * By using callbacks, you can separate and capsulise code blocks.
 
     * For instance, you can put all the layout works in layout.js using callbacks.
     
 
+* You can also override the default callbacks.
+
+    * theme.js is the best place you can override the defaults( functions, variables, etc )
+
+
+## Overriding
+
+* You can overrides not only callbacks but also all the classes and functions.
+
+    * try to override xapp.get_post_list_header() on theme.js
+    
 
 
 ## Template & Layout
