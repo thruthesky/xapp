@@ -45,7 +45,7 @@ function checkLoginState() {
 
 window.fbAsyncInit = function() {
     FB.init({
-        appId      : facebookAppId,
+        appId      : '274542446244927',
         cookie     : true,  // enable cookies to allow the server to access
                             // the session
         xfbml      : true,  // parse social plugins on this page
@@ -91,7 +91,7 @@ function testAPI() {
 }
 
 $(function(){
-    var m = '<fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>' +
+    var m = '<fb:login-button scope="public_profile,email,user_birthday" onlogin="checkLoginState();"></fb:login-button>' +
         '<div id="status"></div>';
     layout.main().prepend(m);
 });

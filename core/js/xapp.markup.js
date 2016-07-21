@@ -196,3 +196,23 @@ markup.get_write_form = function ( $this ) {
 
     return m;
 };
+
+
+markup.get_login_form = function( ) {
+
+    var m = '' +
+    '<div class="login-form">' +
+    '   <form>' +
+    '       <input type="hidden" name="forum" value="login">' +
+    '       <input type="hidden" name="response" value="ajax">' +
+        '       <input type="text" name="id" value="" placeholder="Input User ID">' +
+        '       <input type="password" name="password" value="" placeholder="Input Password">' +
+    '       <button type="button" class="submit btn btn-secondary btn-sm">SUBMIT</button>' +
+    '       <button type="button" class="cancel btn btn-secondary btn-sm">CANCEL</button>' +
+    '   </form>' +
+    '</div>';
+
+
+return m;
+
+};

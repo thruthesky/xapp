@@ -44,6 +44,7 @@ $files = [
     'js/xapp.callback.js',
     'js/xapp.element.js',
     'js/xapp.post-list.js',
+    'js/xapp.login.js',
     'js/xapp.ready.js',
 ];
 
