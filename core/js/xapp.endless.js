@@ -1,3 +1,4 @@
+if ( typeof xapp == 'undefined' ) var xapp = {};
 /**
  * 
  * @type {number}

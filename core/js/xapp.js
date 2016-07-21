@@ -1,3 +1,4 @@
+if ( typeof xapp == 'undefined' ) var xapp = {};
 /**
  *
  * XAPP Mini Framework
@@ -27,15 +28,26 @@
  * @file xapp.js
  *
  * @type {{}}
+ *
  */
 
-var xapp = {};
+
 var db = Lockr;
 xapp.bootstrap = {};
 xapp.bs = xapp.bootstrap;
 xapp.cacheOptions = {};
 xapp.cacheOptions.expire = 1200;
 xapp.local_url = 'index.html?';
+
+function add_scripts( scripts ) {
+
+}
+
+add_scripts ( [
+
+] );
+
+
 
 
 xapp.start = function () {

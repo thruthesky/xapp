@@ -1,3 +1,4 @@
+if ( typeof xapp == 'undefined' ) var xapp = {};
 post_list = xapp.post_list = {};
 
 $(function() {

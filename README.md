@@ -32,8 +32,7 @@ A framework which has some fundamental functions to serve for app(web-app) with 
 
 # INSTALLATION
 
-Add cors in nginx.conf ( nginx 에 아래를 추가해서 cors 를 모두 무시하도록 한다. )
-
+* Add cors for 'font-awesome font' in nginx.conf ( nginx 에 아래를 추가해서 cors 를 모두 무시하도록 한다. )
 
 
     	location / {
@@ -44,6 +43,10 @@ Add cors in nginx.conf ( nginx 에 아래를 추가해서 cors 를 모두 무시
     	}
 
 
+* Check if css.php and js.php works with gzip or deflate.
+
+
+
 
 # HOW TO
 
@@ -51,6 +54,53 @@ Add cors in nginx.conf ( nginx 에 아래를 추가해서 cors 를 모두 무시
  
 
 # Coding Guide
+
+## CSS & Javascript loading
+
+* xapp loads CSS & JS thru PHP and gets the benefits of mixing CSS & JS & PHP. ( php 로 CSS 와 JS 를 로딩해서 compile 이나 304 not modified 등에 활용한다. )
+
+    * the purpose of using this is to manage css & js files easy to use.
+
+
+### How to use it.
+
+* try css.php and js.php in web browser with the options.
+* when "?debug=true", it does not do '304 test'. ( debug=true 이면, "304 not modified" 를 사용하지 않는다. 즉, 수정하는 즉시 바로 웹브라우저에 반영된다.)
+* when "?compile=true", it compiles all the (css/js) files into one. ( compile=true 이면, 하나의 파일로 묶어서 리턴한다. 이 값을 지정하지 않으면 각각의 자바스크립트가 로드된다.)
+* when "?version=xxxxxx", it delivers the version tag to its (css/js files). By using tag version, it will update the browser cache and server cache.
+    * try something like "http://work.org/xapp/core/js.php?version=2016072102&debug=true&compile=true" and change option values and see what is happening.
+
+* IMPORTANT : One thing you have to remember is that, when you don't compile all css into one file, it is JAVASCRIPT which will load all the css files using add_css() function.
+    * So, USE when '<link ...>' WHEN 'compile=true'
+    * USE '<script src="...."></script>' tag WHEN 'compile' is not 'true' !!
+
+* IMPORTANT : Since javascript css/js loading needs 'body' tag loaded first, IF you are going to load css/js with add_css()/add_javascript() function, you must put it inside 'body' tags.
+
+    * which means, css.php with 'compile=true' can be put inside '<head>' tag.
+    * css.php without 'compile=true' must be put inside '<body>' since it uses 'add_css()'.
+    * 'js.php' should be put at the bottom of '<body>' tag. ( right before '</body>' )
+    
+
+i.e.) for development mode, <script src="http://work.org/xapp/core/css.php?version=201607215&debug=true"></script>
+i.e.) for production mode, <link rel="stylesheet" href="http://work.org/xapp/core/css.php?version=201607210001&debug=true&compile=true" />
+
+        
+
+
+* NOTE: For development, the best use is "?version=xxx&debug=true&compile=false", For production "?version=xxx&compile=true".
+
+* WARNING : Javascript lading with 'compile=false' ( or without compile=true ) is not working at the time.
+
+    * There is dependency problem. it looks like all javascript files are really loaded in async.
+    
+        * one solution may be compile all xapp  js files into one.
+
+    * Use individual js link for development.
+    
+        * Use 'compile=true' for production mode.
+        
+    
+
 
 
 ## CALLBACKS AND Overriding

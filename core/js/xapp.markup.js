@@ -1,3 +1,4 @@
+if ( typeof xapp == 'undefined' ) var xapp = {};
 /**
  *
  * @file xapp.markup.js

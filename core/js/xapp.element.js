@@ -1,3 +1,4 @@
+if ( typeof xapp == 'undefined' ) var xapp = {};
 xapp.layout = {};
 var layout = xapp.layout;
 

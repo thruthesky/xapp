@@ -3,18 +3,12 @@
 <head>
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="core/bootstrap/bootstrap.min-2016-07-13.css" />
-    <link rel="stylesheet" href="core/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="core/css/base.css" />
-    <link rel="stylesheet" href="core/css/layout.css" />
-    <link rel="stylesheet" href="core/css/module.css" />
-    <link rel="stylesheet" href="core/css/module-post-list.css" />
-    <link rel="stylesheet" href="core/css/state.css" />
-    <link rel="stylesheet" href="core/css/theme.css" />
+    <!--link rel="stylesheet" href="http://work.org/xapp/core/css.php?version=201607210001&debug=true&compile=true" /-->
     <link rel="stylesheet" href="css/theme.css" />
 </head>
 
 <body>
+<script src="http://work.org/xapp/core/css.php?version=201607215&debug=true"></script>
 <section class="page" data-role="page">
     <header>
         <nav class="navbar navbar-fixed-top bg-faded">
@@ -28,9 +22,6 @@
 
         <div class="row">
             <aside class="left col-xs-12 col-sm-12 col-md-3 col-xl-2">
-
-                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                </fb:login-button>
                 ..
                 <div id="status">
                 </div>
@@ -76,6 +67,7 @@
     </footer>
 </section>
 
+
 <script src="core/js/jquery-2.2.4.min.js"></script>
 <script src="core/js/js.cookie.js"></script>
 <script src="core/bootstrap/tether.min.js"></script>
@@ -93,6 +85,11 @@
 <script src="core/js/xapp.callback.js"></script>
 <script src="core/js/xapp.element.js"></script>
 <script src="core/js/xapp.post-list.js"></script>
+<script src="core/js/xapp.ready.js"></script>
+
+<script>
+    var facebookAppId = '1822890534605540';
+</script>
 <script src="js/facebook.js"></script>
 <script src="js/theme.js"></script>
 </body>

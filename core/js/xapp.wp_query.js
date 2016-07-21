@@ -1,4 +1,4 @@
-
+if ( typeof xapp == 'undefined' ) var xapp = {};
 
 
 
