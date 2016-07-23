@@ -151,6 +151,34 @@ It just does the same as $.get()
 
 
 
+## User Login & Logout & User information display
+
+* 'xapp.login.js' & 'xapp.markup.js' are the scripts that will do all the work for user relation process.
+
+
+### User login & logout display
+
+When 'xapp.login.js' boots, it checks 'session_id'.
+
+만약, session_id 에 값이 있으면 사용자가 로그인을 한 것으로 한다.
+
+xapp.login() 은 사용자가 로그인을 했으면 사용자 아이디(사용자 아이디가 없으면 session_id)를 리턴하고, 아니면 false 를 false 한다.
+
+element-user-login 클래스는 사용자 로그인을 했으면 보여지고,
+
+element-user-logout 클래스는 사용자 로그아웃을 했으면 보여진다.
+
+
+.user-login-value 에는 사용자의 user login 값이 들어간다.
+.session-id-value 에는 사용자의 sesion_id 값이 들어간다.
+
+.user-login-button 을 클릭하면 로그인 창을 layout.main() 상단에 보여준다.
+.user-register-button 을 클릭하면 회원 가입 창을 layout.main() 상단에 보여준다.
+.user-account-button 을 클릭하면 사용자 정보(수정 정보 포함)를 layout.main() 상당에 보여주어야 한다.
+
+.user-logout-button 을 클릭하면 사용자 로그아웃을 한다. ( 단순히 session_id 를 db 에서 지우고, 리프레시를 하면 된다. )
+
+
 
 # Cycle
 

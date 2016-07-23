@@ -51,7 +51,9 @@ add_scripts ( [
 
 
 xapp.start = function () {
-    if ( this.isFront() ) xapp.callback_front_page();
+    if ( this.isFront() ) {
+        xapp.callback_front_page();
+    }
     else if ( this.isPostList() ) {
         var query = xapp.post_list_query_args( 0 );
         xapp.wp_query( query );
@@ -69,13 +71,24 @@ $(function() {
     xapp.init();        // call xapp.init when DOM is ready.
 });
 
+/**
+ * Returns true if current page is 'front' page.
+ *
+ */
 xapp.isFront = function() {
     var action = xapp.in('action');
     return _.isEmpty( action );
 };
+
+/**
+ * Returns true if current page is 'post_list' page.
+ * @returns {boolean}
+ */
 xapp.isPostList = function() {
     return xapp.in('action') == 'post_list';
 };
+
+
 /**
  *
  * 게시판의 글을 서버로 부터 추출한다.

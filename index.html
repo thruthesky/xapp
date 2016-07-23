@@ -14,8 +14,12 @@
         <nav class="navbar navbar-fixed-top bg-faded">
             <div class="nav navbar-nav">
                 <a class="nav-item nav-link active" href="#" api="">Home</a>
-                <a class="nav-item nav-link" href="#" api="page=about">About</a>
-                <a class="nav-item nav-link login-button" href="#">Login</a>
+                <a class="nav-item nav-link" href="#" api="action=about">About</a>
+
+                <a class="element-user-login nav-item nav-link user-account-button" href="#" style="display:none;">Welcome, <b class="user-login-value">...</b></a>
+
+                <a class="element-user-logout nav-item nav-link user-login-button" href="#" style="display:none;">Login</a>
+                <a class="element-user-logout nav-item nav-link user-register-button" href="#" style="display:none;">Register</a>
             </div>
         </nav>
     </header>
@@ -86,7 +90,7 @@
 <script src="core/js/xapp.callback.js"></script>
 <script src="core/js/xapp.element.js"></script>
 <script src="core/js/xapp.post-list.js"></script>
-<script src="core/js/xapp.login.js"></script>
+<script src="core/js/xapp.user.js"></script>
 <script src="core/js/xapp.ready.js"></script>
 
 <script>

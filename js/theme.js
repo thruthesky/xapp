@@ -13,14 +13,28 @@ if ( typeof xapp == 'undefined' ) var xapp = {};
  */
 window.xappReady = function () {
     xapp.server_url = "http://work.org/wordpress/";
-    xapp.server_url = "http://wordpress46b1.org/";
+    //xapp.server_url = "http://wordpress46b1.org/";
     //xapp.server_url = "http://dev.withcenter.com/wordpress/";
     xapp.cacheOptions.expire = 1;
     xapp.start();
     console.log('index.js $(function() { ... }); finished.');
     /// TEST ...
-    auto_show_write_forum();
+    // auto_show_write_forum();
+    //auto_show_login_form();
+    //auto_show_register_form();
+
+    //alert( db.get('session_id') );
 };
+function auto_show_login_form() {
+    setTimeout(function(){
+        $('.user-login-button').click();
+    }, 500);
+}
+function auto_show_register_form() {
+    setTimeout(function(){
+        $('.user-register-button').click();
+    }, 500);
+}
 function auto_show_write_forum() {
     setTimeout(function(){
         $('.post-list-page-header .post').click();

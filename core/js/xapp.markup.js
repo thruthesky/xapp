@@ -198,21 +198,68 @@ markup.get_write_form = function ( $this ) {
 };
 
 
-markup.get_login_form = function( ) {
-
+markup.user_login_form = function( ) {
     var m = '' +
-    '<div class="login-form">' +
+    '<div class="user-login-form">' +
     '   <form>' +
-    '       <input type="hidden" name="forum" value="login">' +
-    '       <input type="hidden" name="response" value="ajax">' +
-        '       <input type="text" name="id" value="" placeholder="Input User ID">' +
-        '       <input type="password" name="password" value="" placeholder="Input Password">' +
-    '       <button type="button" class="submit btn btn-secondary btn-sm">SUBMIT</button>' +
-    '       <button type="button" class="cancel btn btn-secondary btn-sm">CANCEL</button>' +
+    '       <input type="hidden" name="forum" value="user_login_check">' +
+        '       <input type="text" name="user_login" value="" placeholder="Input User ID">' +
+        '       <input type="password" name="user_pass" value="" placeholder="Input Password">' +
+
+        '       <div class="user-login-form-message"></div>' +
+
+        '   <div class="button">' +
+    '          <button type="button" class="submit btn btn-secondary btn-sm">SUBMIT</button>' +
+    '          <button type="button" class="cancel btn btn-secondary btn-sm">CANCEL</button>' +
+        '   </div>' +
     '   </form>' +
     '</div>';
 
+    return m;
+};
 
-return m;
+markup.user_register_form = function( ) {
+    var m = '' +
+        '<div class="user-register-form">' +
+        '   <form>' +
+        '       <input type="hidden" name="forum" value="user_register">' +
+        '       <input type="text" name="user_login" value="" placeholder="Input User Login ID">' +
+        '       <input type="password" name="user_pass" value="" placeholder="Input Password">' +
+        '       <input type="text" name="user_email" value="" placeholder="Input Email">' +
+        '       <input type="date" name="birthday" value="">' +
+        '       <input type="text" name="gender" value="">' +
+        '       <div class="user-register-form-message"></div>' +
+        '       <div class="buttons">' +
+        '          <button type="button" class="submit btn btn-secondary btn-sm">REGISTER</button>' +
+        '          <button type="button" class="cancel btn btn-secondary btn-sm">CANCEL</button>' +
+        '       </div>' +
+        '   </form>' +
+        '</div>';
 
+    return m;
+};
+
+
+
+
+var get_loader = markup.get_loader = function () {
+    return '' +
+        '<div>' +
+        '   <i class="fa fa-spin fa-spinner"></i>' +
+        '   Loading ...' +
+        '</div>' +
+        '';
+};
+
+
+
+markup.user_account_form = function() {
+    return '' +
+        '<div class="user-account-form">' +
+        '   <div class="user-logout-button btn btn-primary">Logout</div>' +
+        '' +
+        '' +
+        '' +
+        '' +
+        '</div>';
 };
