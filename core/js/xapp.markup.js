@@ -94,8 +94,11 @@ markup.post_list_page = function ( data ) {
 
     for ( var i in posts ) {
         var post = posts[i];
-        //console.log(post);
+        console.log(post);
         var url = post.guid;
+        var post_content = post_list.get_content(post);
+
+
         var item = '' +
             '<div class="post" post-id="'+post.ID+'">';
         item += '       <a href="'+url+'" api="action=post_view" class="post-title">';
@@ -116,7 +119,7 @@ markup.post_list_page = function ( data ) {
 
             '               </span>' +
             '           </span>';
-        item += '       <section class="post-content">' + post.post_content + '</section>';
+        item += '       <section class="post-content">' + post_content + '</section>';
         item += markup.comment_write_form();
 
         item += '</div>';
@@ -160,6 +163,7 @@ markup.post_write_form = function ( $this ) {
         '<div class="'+cl.post_write_form()+'" page-no="'+page_no+'">' +
         '   <form>' +
         '       <input type="hidden" name="do" value="post_edit_submit">' +
+        '       <input type="hidden" name="content_type" value="text/plain">' +
         '       <input type="hidden" name="response" value="ajax">' +
         '       <input type="hidden" name="slug" value="'+slug+'">' +
         '       <input type="hidden" name="session_id" value="'+xapp.session_id+'">' +
@@ -180,6 +184,7 @@ markup.post_edit_form = function ( $post ) {
         '<div class="'+cl.post_edit_form()+'">' +
         '   <form>' +
         '       <input type="hidden" name="do" value="post_edit_submit">' +
+        '       <input type="hidden" name="content_type" value="text/plain">' +
         '       <input type="hidden" name="response" value="ajax">' +
         '       <input type="hidden" name="post_ID" value="">' +
         '       <input type="hidden" name="session_id" value="'+xapp.session_id+'">' +

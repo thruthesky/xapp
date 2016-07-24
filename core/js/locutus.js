@@ -1,36 +1,4 @@
-function parse_str (str, array) { // eslint-disable-line camelcase
-    //       discuss at: http://locutus.io/php/parse_str/
-    //      original by: Cagri Ekin
-    //      improved by: Michael White (http://getsprink.com)
-    //      improved by: Jack
-    //      improved by: Brett Zamir (http://brett-zamir.me)
-    //      bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
-    //      bugfixed by: Brett Zamir (http://brett-zamir.me)
-    //      bugfixed by: stag019
-    //      bugfixed by: Brett Zamir (http://brett-zamir.me)
-    //      bugfixed by: MIO_KODUKI (http://mio-koduki.blogspot.com/)
-    // reimplemented by: stag019
-    //         input by: Dreamer
-    //         input by: Zaide (http://zaidesthings.com/)
-    //         input by: David Pesta (http://davidpesta.com/)
-    //         input by: jeicquest
-    //           note 1: When no argument is specified, will put variables in global scope.
-    //           note 1: When a particular argument has been passed, and the
-    //           note 1: returned value is different parse_str of PHP.
-    //           note 1: For example, a=b=c&d====c
-    //        example 1: var $arr = {}
-    //        example 1: parse_str('first=foo&second=bar', $arr)
-    //        example 1: var $result = $arr
-    //        returns 1: { first: 'foo', second: 'bar' }
-    //        example 2: var $arr = {}
-    //        example 2: parse_str('str_a=Jack+and+Jill+didn%27t+see+the+well.', $arr)
-    //        example 2: var $result = $arr
-    //        returns 2: { str_a: "Jack and Jill didn't see the well." }
-    //        example 3: var $abc = {3:'a'}
-    //        example 3: parse_str('a[b]["c"]=def&a[q]=t+5', $abc)
-    //        example 3: var $result = $abc
-    //        returns 3: {"3":"a","a":{"b":{"c":"def"},"q":"t 5"}}
-
+function parse_str (str, array) {
     var strArr = String(str).replace(/^&/, '').replace(/&$/, '').split('&')
     var sal = strArr.length
     var i
@@ -129,4 +97,11 @@ function parse_str (str, array) { // eslint-disable-line camelcase
             lastObj[key] = value
         }
     }
+}
+
+function nl2br (str, isXhtml) {
+    var breakTag = (isXhtml || typeof isXhtml === 'undefined') ? '<br ' + '/>' : '<br>'
+
+    return (str + '')
+        .replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2')
 }

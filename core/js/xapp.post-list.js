@@ -55,6 +55,26 @@ post_list.get_post = function ($this) {
     return $this.closest( '.post' );
 };
 
+post_list.get_content = function ( post ) {
+
+
+    if ( post.content_type == 'undefined' ) {
+
+    }
+    else if ( post.content_type == 'text/plain'  ) {
+        post.post_content = sanitize_content( post.post_content );
+    }
+    else {
+
+    }
+
+    return post.post_content;
+
+};
+
+
+
+
 
 post_list.post_edit_button_clicked = function() {
     console.log('post edit button clicked');
@@ -218,7 +238,7 @@ post_list.post_edit_form_submit = function () {
                 var title = $edit.find('[name="title"]').val();
                 var content = $edit.find('[name="content"]').val();
                 $post.find('.post-title').text( title );
-                $post.find('.post-content').text( content );
+                $post.find('.post-content').html( sanitize_content(content) );
                 $edit.remove();
                 $post.show();
                 if ( xapp.option.alert.after_edit ) xapp.alert("EDIT Success", "You just have edited a post.");

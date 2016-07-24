@@ -8,3 +8,6 @@ function trim(text) {
     return s(text).trim().value();
 }
 
+function sanitize_content ( content ) {
+    return nl2br(s.stripTags(content));
+}
