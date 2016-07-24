@@ -33,35 +33,37 @@ xapp.endless_set_no_more_posts = function() {
         }
         if ( xapp.endless_in_loading() ) return xapp.callback_endless_in_loading();
         var top = $document.height() - $window.height() - xapp.endless_trigger_distance_from_bottom;
-        if ($window.scrollTop() >= top) {
-
-            xapp.endless_page ++;
-
-            console.log("xapp.endless.js count:" + xapp.endless_page + ", : " + '');
-            var o = xapp.callback_endless_cache_args( xapp.endless_page );
-
-
-            if ( o ) {
-                //console.log( o );
-
-                /**
-                 *
-                 * Load more data.
-                 *
-                 *      - show loader icon
-                 *      - get data from server
-                 *      - display it.
-                 *      - hide loader icon.
-                 */
-
-                xapp.callback_endless_begin_loading(); // until cache finishes.
-                xapp.cache( o );
-
-
-            }
-            else {
-
-            }
-        }
+        if ($window.scrollTop() >= top) xapp.endless_post_load_next_page();
     });
 }());
+
+xapp.endless_post_load_next_page = function() {
+
+    xapp.endless_page ++;
+
+    console.log("xapp.endless.js count:" + xapp.endless_page + ", : " + '');
+    var o = xapp.callback_endless_cache_args( xapp.endless_page );
+
+
+    if ( o ) {
+        //console.log( o );
+
+        /**
+         *
+         * Load more data.
+         *
+         *      - show loader icon
+         *      - get data from server
+         *      - display it.
+         *      - hide loader icon.
+         */
+
+        xapp.callback_endless_begin_loading(); // until cache finishes.
+        xapp.cache( o );
+
+
+    }
+    else {
+
+    }
+};

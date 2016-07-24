@@ -39,6 +39,9 @@ xapp.wp_get_categories = function ( o ) {
  *      3. Pass the data to success callback.
  * @param o
  */
+/**
+ *
+ *
 xapp.wp_query = function (o) {
     var defaults = {
         url : this.server_url,
@@ -49,3 +52,4 @@ xapp.wp_query = function (o) {
     xapp.cache( o );
 };
 
+*/

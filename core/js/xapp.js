@@ -35,17 +35,21 @@ if ( typeof xapp == 'undefined' ) var xapp = {};
 var db = Lockr;
 xapp.bootstrap = {};
 xapp.bs = xapp.bootstrap;
-xapp.cacheOptions = {};
-xapp.cacheOptions.expire = 1200;
+
+
 xapp.local_url = 'index.html?';
+xapp.query = '';
+xapp.qv = {};
+//xapp.debug = true;          // true 이면 디버깅 모드를 실행한다.
 
-function add_scripts( scripts ) {
-
-}
-
-add_scripts ( [
-
-] );
+xapp.option = {};
+xapp.option.alert = {};
+xapp.option.cache = {};
+xapp.option.alert.after_post = true;        // if true, it shows alert box before refresh (after post). if not, just refresh. (글 등록 후 알림창을 표시하고 페이지 reload 할 지, 그냥 reload 할지 결정.)
+xapp.option.alert.after_comment = true;     //
+xapp.option.cache.front_page_expire = 1200;
+xapp.option.cache.post_list_expire = 1200;
+xapp.option.cache.post_list = true;         // if true, it caches post-list page.
 
 
 
@@ -56,7 +60,8 @@ xapp.start = function () {
     }
     else if ( this.isPostList() ) {
         var query = xapp.post_list_query_args( 0 );
-        xapp.wp_query( query );
+        //xapp.wp_query( query );
+        xapp.endless_post_load_next_page();
     }
     else {
         alert("No route to go");
@@ -88,31 +93,6 @@ xapp.isPostList = function() {
     return xapp.in('action') == 'post_list';
 };
 
-
-/**
- *
- * 게시판의 글을 서버로 부터 추출한다.
- *
- * - 이 함수는 정형화(활용도가 고정)되어져 있어서 따로 커스터마이징을 할 필요가 없다.
- *
- *
- * @param page - page no. what page of content ( post ) should be displayed?
- */
-xapp.post_list_query_args = function ( page ) {
-    var id = xapp.query + '_' + page;
-    page = parseInt( page ) + 1;
-    var query = {
-        'id' : id,
-        url: xapp.server_url + '?forum=api&' + xapp.query + '&page=' + page + '&posts_per_page=4',
-        expire : xapp.cacheOptions.expire,
-        success : this.callback_endless_post_list,
-        'failure' : function ( re ) {
-            alert('ERROR on failre');
-        }
-    };
-    return query;
-};
-
 xapp.move = function( api ) {
     location.href = xapp.local_url + api;
 };
@@ -122,6 +102,18 @@ xapp.reload = xapp.refresh = function () {
 
 
 /**
+ *
+ * @note Current page url is always like "?action=post_list&slug=its".
+ *
+ *  ( 현재 접속 주소는 항상 "?action=post_list&slug=its" 와 같다. 왜냐하면 웹 페이지에서 링크가 그냥 이렇게 걸리기 때문이다. )
+ *
+ * @note Set this.query with current url and put query key/values into this.qv
+ *
+ *  ( 현재 접속 주소 전체를 this.query 에 집어 넣고, 그것을 파싱하여 키/값 형태로 된 것을 this.qv 에 집어 넣는다. )
+ *
+ *
+ *
+ *
  *
  */
 xapp.parse_query_string = function () {
@@ -134,6 +126,8 @@ xapp.parse_query_string = function () {
     }
     //console.log(this.qv);
 };
+
+
 /**
  * Returns the $_GET variable.
  * @param name
@@ -173,7 +167,7 @@ xapp.bind_api = function () {
 };
 
 xapp.get = function ( url, success, error ) {
-    console.log('xapp.get() : ' + url);
+    //console.log('xapp.get() : ' + url);
     $.ajax( {
         url: url,
         // async: true,
@@ -219,7 +213,7 @@ xapp.alert = function( title, content, callback ) {
         $('.xapp-alert').remove();
         if ( typeof callback == 'function' ) callback();
                 //$('.xapp-alert').off('hidden.bs.modal', handler_xapp_alert_close);
-        console.log("un-bind for close() .... " + (new Date).toString() );
+        // console.log("un-bind for close() .... " + (new Date).toString() );
     }
     $('.xapp-alert').on('hidden.bs.modal', handler_xapp_alert_close);
 

@@ -63,7 +63,7 @@ db.expired = function( id, seconds ) {
 
 
     if ( isNaN(old_stamp) || old_stamp < new_stamp ) {
-        console.log( id + ' has expired' );
+        //console.log( id + ' has expired' );
         return true;
     }
     else {
@@ -77,7 +77,7 @@ db.expired = function( id, seconds ) {
 xapp.doCache = function (o) {
     //console.log( 'xapp.doCache() : Going to CACHE for ' + o.id + ' URL: ' + o.url  );
     //console.log( o );
-    console.log( 'xapp.doCache() : ', o);
+    // console.log( 'xapp.doCache() : ', o);
     this.get( o.url, function(re) {
         db.set ( o.id, re );
         db.setCache( o.id, re );

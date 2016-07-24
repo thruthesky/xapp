@@ -14,6 +14,15 @@ A framework which has some fundamental functions to serve for app(web-app) with 
 * Try to put 'a' tag as much possible. Even though search bots cannot understand javascript and they are not able to load more on endless page, it is worth to give a link.
 
 
+* Why does it not open a new page when a user wants to edit his post/comment?
+
+    * Because of the speed.
+    
+    * When a user uses same wireless internet (3G, 4G), mobile looks more slow than other devices.
+    
+        And we focus on mobile.
+        
+
 
 # ITS
 
@@ -145,6 +154,8 @@ i.e.) for production mode, <link rel="stylesheet" href="http://work.org/xapp/cor
 
 If you have no 'id' in parameter, then it is just the same as xapp.get()
 
+( xapp.cache() 에 id 값을 주지 않으면 그냥 xapp.get() 과 동일하다. 특히, 게시판 목록을 할 때에는 캐시를 하면 안된다. 따라서 id 값을 주지 않는다. )
+
     xapp.cache( { 'url' : '...' } );
 
 It just does the same as $.get()
@@ -180,12 +191,35 @@ element-user-logout 클래스는 사용자 로그아웃을 했으면 보여진�
 
 
 
+## POST, POST Management
+
+
+Post related actions will be triggered when one of the css class will be clicked.
+
+
+post-edit-button for Edit
+post-delete-button for Delete
+post-vote-button for Vote
+post-report-button for Report
+post-copy-button for Copy
+post-move-button for Move
+post-blind-button for Blind
+post-block-button for Block
+
+
+
+
+
 # Cycle
 
-xapp.start() ==> if is front page()
+xapp.start()
  
-    yes ==>
+    ==> if is front page()
+ 
+            ===> display fornt page.
     
-    no ==> xapp.wp_query() ==> xapp.cache() ==> 
+    ==> if post_list_page
+    
+            ===> xapp.wp_query() ==> xapp.cache()
     
     

@@ -69,13 +69,13 @@ xapp.convert_categories_into_list_group_item = function ( data ) {
 /**
  *
  *
- * Returns bootstrap list-group markup.
+ * Returns HTML (markup) for post list page.
  *
  * @note post wrapper must be a tag for seo purpose.
  *
  * @param data
  */
-xapp.convert_posts_into_list_group_custom_content = function ( data ) {
+markup.post_list_page = function ( data ) {
     var posts = data.posts;
     var page = get_page_no(data.in['page']);
     if ( _.isEmpty(posts) ) {
@@ -94,13 +94,26 @@ xapp.convert_posts_into_list_group_custom_content = function ( data ) {
 
     for ( var i in posts ) {
         var post = posts[i];
-
+        //console.log(post);
         var url = post.guid;
         var item = '' +
-            '<div class="post">';
+            '<div class="post" post-id="'+post.ID+'">';
         item += '       <a href="'+url+'" api="action=post_view" class="post-title">';
         item += '          <h4>' + post.post_title + '</h4>';
         item += '       </a>';
+        item += '       <span class="meta">' +
+            '               <span class="author-caption">author:</span><span class="author">'+post.author_name+'</span>' +
+            '               <span class="buttons">' +
+            '                   <span class="post-edit-button">Edit</span>' +
+            '                   <span class="post-delete-button">Delete</span>' +
+            '                   <span class="post-vote-button">Vote</span>' +
+            '                   <span class="post-report-button">Report</span>' +
+            '                   <span class="post-copy-button">Copy</span>' +
+            '                   <span class="post-move-button">Move</span>' +
+            '                   <span class="post-blind-button">Blind</span>' +
+            '                   <span class="post-block-button">Block</span>' +
+            '               </span>' +
+            '           </span>';
         item += '       <section class="post-content">' + post.post_content + '</section>';
         item += xapp.markup_comment_form();
 
@@ -180,8 +193,7 @@ markup.get_write_form = function ( $this ) {
         '       <input type="hidden" name="do" value="post_edit_submit">' +
         '       <input type="hidden" name="response" value="ajax">' +
         '       <input type="hidden" name="slug" value="'+slug+'">' +
-        '       <input type="hidden" name="session_id" value="">' +
-        '       <input type="hidden" name="session_password" value="">' +
+        '       <input type="hidden" name="session_id" value="'+xapp.session_id+'">' +
         '       <input type="text" name="title" value="" placeholder="Input title">' +
         '       <div>' +
         '           <textarea name="content"></textarea>' +
@@ -196,6 +208,8 @@ markup.get_write_form = function ( $this ) {
 
     return m;
 };
+
+
 
 
 markup.user_login_form = function( ) {
@@ -217,6 +231,8 @@ markup.user_login_form = function( ) {
 
     return m;
 };
+
+
 
 markup.user_register_form = function( ) {
     var m = '' +
@@ -253,6 +269,7 @@ var get_loader = markup.get_loader = function () {
 
 
 
+
 markup.user_account_form = function() {
     return '' +
         '<div class="user-account-form">' +
@@ -263,3 +280,5 @@ markup.user_account_form = function() {
         '' +
         '</div>';
 };
+
+
