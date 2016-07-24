@@ -36,7 +36,8 @@ A framework which has some fundamental functions to serve for app(web-app) with 
 * xapp.markup_xxxx 을 markup = xapp.markup 으로 하고, 함수를 분리한다.
 * Facebook Login API is for web for now. It uses cookie. it wouldn't work on app since it is web app and using cookie.
     * you need to get it for app version.
-    
+* 글 쓸 때, $.post() 를 사용하는데, 글 데이터를 data 속성에 넣어야 한다.
+
 
 
 # INSTALLATION

@@ -99,11 +99,12 @@ markup.post_list_page = function ( data ) {
         var item = '' +
             '<div class="post" post-id="'+post.ID+'">';
         item += '       <a href="'+url+'" api="action=post_view" class="post-title">';
-        item += '          <h4>' + post.post_title + '</h4>';
+        item += '          ' + post.post_title + '';
         item += '       </a>';
         item += '       <span class="meta">' +
             '               <span class="author-caption">author:</span><span class="author">'+post.author_name+'</span>' +
             '               <span class="buttons">' +
+
             '                   <span class="post-edit-button">Edit</span>' +
             '                   <span class="post-delete-button">Delete</span>' +
             '                   <span class="post-vote-button">Vote</span>' +
@@ -112,10 +113,11 @@ markup.post_list_page = function ( data ) {
             '                   <span class="post-move-button">Move</span>' +
             '                   <span class="post-blind-button">Blind</span>' +
             '                   <span class="post-block-button">Block</span>' +
+
             '               </span>' +
             '           </span>';
         item += '       <section class="post-content">' + post.post_content + '</section>';
-        item += xapp.markup_comment_form();
+        item += markup.comment_write_form();
 
         item += '</div>';
 
@@ -130,8 +132,75 @@ markup.post_list_page = function ( data ) {
 };
 
 
-xapp.markup_comment_form = function() {
+markup.get_post_list_page_header = function ( data ) {
+    var category = data.category;
+    var page = get_page_no(data.in['page']);
+    var m = '';
+    m += '  <div class="post-list-page-header">';
+    m += '      <h4 class="list-group-item-heading">' + category['cat_name'] + '</h4>';
+    m += '      <p class="list-group-item-text">' +
+        '           <div class="meta">Page: '+page+', No. of Posts : '+ category['count'] +'</div>' +
+        '           <div class="description">'+category['category_description']+'</div>' +
+        '           <div class="buttons">' +
+        '               <button class="'+cl.post_write_button()+' btn btn-secondary">POST</button>' +
+        '               <button class="top btn btn-secondary">TOP</button>' +
+        '           </div>' +
+        '       </p>';
+    m += '  </div>';
+    return m;
+};
+
+
+markup.post_write_form = function ( $this ) {
+    var $header = $this.closest( '.post-list-page-header' );
+    var $page = $header.parent();
+    var page_no = $page.attr('page');
+    var slug = $page.attr('slug');
     var m = '' +
+        '<div class="'+cl.post_write_form()+'" page-no="'+page_no+'">' +
+        '   <form>' +
+        '       <input type="hidden" name="do" value="post_edit_submit">' +
+        '       <input type="hidden" name="response" value="ajax">' +
+        '       <input type="hidden" name="slug" value="'+slug+'">' +
+        '       <input type="hidden" name="session_id" value="'+xapp.session_id+'">' +
+        '       <input type="text" name="title" value="" placeholder="Input title">' +
+        '       <div>' +
+        '           <textarea name="content"></textarea>' +
+        '       </div>' +
+        '       <button type="button" class="submit btn btn-secondary btn-sm">SUBMIT</button>' +
+        '       <button type="button" class="cancel btn btn-secondary btn-sm">CANCEL</button>' +
+        '   </form>' +
+        '</div>';
+    return m;
+};
+
+markup.post_edit_form = function ( $post ) {
+
+    var m = '' +
+        '<div class="'+cl.post_edit_form()+'">' +
+        '   <form>' +
+        '       <input type="hidden" name="do" value="post_edit_submit">' +
+        '       <input type="hidden" name="response" value="ajax">' +
+        '       <input type="hidden" name="post_ID" value="">' +
+        '       <input type="hidden" name="session_id" value="'+xapp.session_id+'">' +
+        '       <input type="text" name="title" value="" placeholder="Input title">' +
+        '       <div>' +
+        '           <textarea name="content"></textarea>' +
+        '       </div>' +
+        '       <button type="button" class="submit btn btn-secondary btn-sm">SUBMIT</button>' +
+        '       <button type="button" class="cancel btn btn-secondary btn-sm">CANCEL</button>' +
+        '   </form>' +
+        '</div>';
+
+    return m;
+
+};
+
+
+
+
+markup.comment_write_form = function() {
+    var m = '<div class="'+cl.comment_write_form()+'">' +
         '<form>' +
         '' +
         '' +
@@ -156,56 +225,7 @@ xapp.markup_comment_form = function() {
         '' +
         '' +
         '</form>' +
-        '';
-    return m;
-};
-
-
-markup.get_post_list_page_header = function ( data ) {
-    var category = data.category;
-    var page = get_page_no(data.in['page']);
-    var m = '';
-    m += '  <div class="post-list-page-header">';
-    m += '      <h4 class="list-group-item-heading">' + category['cat_name'] + '</h4>';
-    m += '      <p class="list-group-item-text">' +
-        '           <div class="meta">Page: '+page+', No. of Posts : '+ category['count'] +'</div>' +
-        '           <div class="description">'+category['category_description']+'</div>' +
-        '           <div class="buttons">' +
-        '               <button class="post btn btn-secondary">POST</button>' +
-        '               <button class="top btn btn-secondary">TOP</button>' +
-        '           </div>' +
-        '       </p>';
-    m += '  </div>';
-    return m;
-};
-
-
-markup.get_write_form = function ( $this ) {
-
-    var $header = $this.closest( '.post-list-page-header' );
-    var $page = $header.parent();
-    var page_no = $page.attr('page');
-    var slug = $page.attr('slug');
-
-    var m = '' +
-        '<div class="post-write-form" page-no="'+page_no+'">' +
-        '   <form>' +
-        '       <input type="hidden" name="do" value="post_edit_submit">' +
-        '       <input type="hidden" name="response" value="ajax">' +
-        '       <input type="hidden" name="slug" value="'+slug+'">' +
-        '       <input type="hidden" name="session_id" value="'+xapp.session_id+'">' +
-        '       <input type="text" name="title" value="" placeholder="Input title">' +
-        '       <div>' +
-        '           <textarea name="content"></textarea>' +
-        '       </div>' +
-        '       <button type="button" class="submit btn btn-secondary btn-sm">SUBMIT</button>' +
-        '       <button type="button" class="cancel btn btn-secondary btn-sm">CANCEL</button>' +
-        '   </form>' +
-        '' +
-        '' +
-        '' +
-        '';
-
+        '</div>';
     return m;
 };
 

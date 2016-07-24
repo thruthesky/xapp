@@ -7,16 +7,38 @@ layout.main = function() {
 };
 
 
-var el = element = xapp.element = {};
+var cl = xapp.classes = {};                 // class name only
+var sl = selector = xapp.selector = {};     // selector only.
+var el = element = xapp.element = {};       // select element.
 
 
-el.selector_post_write_form = function() {
-    return '.post-write-form';
-};
 
-element.post_write_form = function() {
-    return $( el.selector_post_write_form() );
-};
+
+
+cl.post_write_form = function() { return 'post-write-form'; };
+sl.post_write_form = function() { return '.' + cl.post_write_form(); };
+el.post_write_form = function() { return $( sl.post_write_form() ); };
+
+
+cl.post_write_button = function() { return 'post-write-button'; };
+sl.post_write_button = function () { return '.' + cl.post_write_button(); };
+el.post_write_button = function () { return $( sl.post_write_button() ); };
+
+
+
+cl.post_edit_form = function() { return 'post-edit-form'; };
+sl.post_edit_form = function() { return '.' + cl.post_edit_form(); };
+el.post_edit_form = function() { return $( sl.post_edit_form() ); };
+
+
+cl.post_edit_button = function() { return 'post-edit-button'; };
+sl.post_edit_button = function () { return '.' + cl.post_edit_button(); };
+el.post_edit_button = function () { return $( sl.post_edit_button() ); };
+
+
+cl.comment_write_form = function() { return 'comment-write-form'; };
+sl.comment_write_form = function () { return '.' + cl.comment_write_form(); };
+el.comment_write_form = function () { return $( sl.comment_write_form() ); };
 
 
 var register_form_message = el.register_form_display = function() {

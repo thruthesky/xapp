@@ -46,6 +46,7 @@ xapp.option = {};
 xapp.option.alert = {};
 xapp.option.cache = {};
 xapp.option.alert.after_post = true;        // if true, it shows alert box before refresh (after post). if not, just refresh. (글 등록 후 알림창을 표시하고 페이지 reload 할 지, 그냥 reload 할지 결정.)
+xapp.option.alert.after_edit = true;
 xapp.option.alert.after_comment = true;     //
 xapp.option.cache.front_page_expire = 1200;
 xapp.option.cache.post_list_expire = 1200;
@@ -183,9 +184,12 @@ xapp.get = function ( url, success, error ) {
  *
  * @code
  *
- *  xapp.alert("POST Success", "You just have posted...", xapp.reload);
+ *      xapp.alert("POST Success", "You just have posted...", xapp.reload); // with a callback
+ *
+ *      xapp.alert("EDIT Success", "You just have edited a psot.");     // without callback
  *
  * @endcode
+ *
  */
 xapp.alert = function( title, content, callback ) {
 
@@ -220,4 +224,11 @@ xapp.alert = function( title, content, callback ) {
 };
 
 
+
+
+xapp.get_error_message = function (data) {
+    var code = data.code;
+    var message = data.message;
+    return "ERROR(" + code + ") " + message;
+};
 

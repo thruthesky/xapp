@@ -1,4 +1,9 @@
 
+
+.post .post-title {
+    display: block;
+    font-size: 1.4rem;
+}
 .page-content {
     padding: .4em;
 }
@@ -30,21 +35,21 @@
 
 
 
-.post-list-page .post form .buttons {
+.post-list-page .post .comment-write-form .buttons {
     display:none;
 }
 
-.post-list-page .post form textarea {
+.post-list-page .post .comment-write-form textarea {
     width: 100%;
     height: 38px;
 }
 
 
-.post-list-page .post form.selected textarea {
+.post-list-page .post .comment-write-form.selected textarea {
     height: 120px;
 }
 
-.post-list-page .post form.selected .buttons {
+.post-list-page .post .comment-write-form.selected .buttons {
     display:block;
 }
 
@@ -60,4 +65,10 @@
     line-height: 1.4em;
     max-height: 5.6em;
     overflow: hidden;
+}
+
+
+/* post edit */
+.post-edit-form {
+    background-color: grey;
 }
