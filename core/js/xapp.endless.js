@@ -1,10 +1,36 @@
-if ( typeof xapp == 'undefined' ) var xapp = {};
 /**
- * 
+ *
+ * @file xapp.endless.js
+ * @desc This scripts hold methods for endless related codes.
+ *
+ */
+
+///
+if ( typeof xapp == 'undefined' ) var xapp = {};
+
+/**
+ *
+ * @note variables
+ *
  * @type {number}
  */
+xapp.endless_in_process_loading = false;                // whether it is in loading.
 xapp.endless_trigger_distance_from_bottom = 300;
 xapp.endless_page = 0;
+(function() {
+    var $window = $( window );
+    var $document = $( document );
+    $document.scroll( function() {
+        if ( xapp.endless_no_more_posts() ) {
+            return;
+        }
+        if ( xapp.endless_in_loading() ) return xapp.callback_endless_in_loading();
+        var top = $document.height() - $window.height() - xapp.endless_trigger_distance_from_bottom;
+        if ($window.scrollTop() >= top) xapp.endless_post_load_next_page();
+    });
+}());
+
+
 xapp.endless_in_loading = function() {
     if ( typeof xapp.endless_in_process_loading == 'undefined' ) {
         xapp.endless_in_process_loading = false;
@@ -23,19 +49,6 @@ xapp.endless_no_more_posts = function () {
 xapp.endless_set_no_more_posts = function() {
     return xapp.endless_flag_no_more_posts = true;
 };
-
-(function() {
-    var $window = $( window );
-    var $document = $( document );
-    $document.scroll( function() {
-        if ( xapp.endless_no_more_posts() ) {
-            return;
-        }
-        if ( xapp.endless_in_loading() ) return xapp.callback_endless_in_loading();
-        var top = $document.height() - $window.height() - xapp.endless_trigger_distance_from_bottom;
-        if ($window.scrollTop() >= top) xapp.endless_post_load_next_page();
-    });
-}());
 
 xapp.endless_post_load_next_page = function() {
 
