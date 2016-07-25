@@ -14,7 +14,8 @@ if ( typeof xapp == 'undefined' ) var xapp = {};
  *
  * @type {number}
  */
-xapp.endless_in_process_loading = false;                // whether it is in loading.
+xapp.endless_in_process_loading = false;                // if true, it is in loading from server. whether it is in loading.
+xapp.endless_no_more_posts = false;                // if true, there is no more post from that forum.
 xapp.endless_trigger_distance_from_bottom = 300;
 xapp.endless_page = 0;
 (function() {
@@ -40,15 +41,19 @@ xapp.endless_in_loading = function() {
     return xapp.endless_in_process_loading;
 };
 
+/**
+ * Returns xapp.endless_no_more_posts;
+ * @returns {boolean}
+ */
 xapp.endless_no_more_posts = function () {
-    if ( typeof xapp.endless_flag_no_more_posts == 'undefined' ) {
-        xapp.endless_flag_no_more_posts = false;
-        return false;
-    }
-    else return xapp.endless_flag_no_more_posts;
+    return xapp.endless_no_more_posts;
 };
+/**
+ * Sets there is no more posts from server.
+ * @returns {boolean}
+ */
 xapp.endless_set_no_more_posts = function() {
-    return xapp.endless_flag_no_more_posts = true;
+    return xapp.endless_no_more_posts = true;
 };
 
 xapp.endless_post_load_next_page = function() {
