@@ -79,7 +79,7 @@ markup.post_list_page = function ( data ) {
     var posts = data.posts;
     var page = get_page_no(data.in['page']);
     if ( _.isEmpty(posts) ) {
-        xapp.endless_set_no_more_posts();
+        endless.set_no_more_posts();
         return xapp.callback_endless_no_more_posts();
     }
     var slug = data.in['slug'];

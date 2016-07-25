@@ -5,8 +5,9 @@
  *
  */
 
-///
+/// variables
 if ( typeof xapp == 'undefined' ) var xapp = {};
+var endless = xapp.endless = {};
 
 /**
  *
@@ -15,19 +16,17 @@ if ( typeof xapp == 'undefined' ) var xapp = {};
  * @type {number}
  */
 xapp.endless_in_process_loading = false;                // if true, it is in loading from server. whether it is in loading.
-xapp.endless_no_more_posts = false;                // if true, there is no more post from that forum.
+endless.no_more_posts = false;                     // if true, there is no more post from that forum.
 xapp.endless_trigger_distance_from_bottom = 300;
 xapp.endless_page = 0;
 (function() {
     var $window = $( window );
     var $document = $( document );
     $document.scroll( function() {
-        if ( xapp.endless_no_more_posts() ) {
-            return;
-        }
-        if ( xapp.endless_in_loading() ) return xapp.callback_endless_in_loading();
-        var top = $document.height() - $window.height() - xapp.endless_trigger_distance_from_bottom;
-        if ($window.scrollTop() >= top) xapp.endless_post_load_next_page();
+        if ( endless.get_no_more_posts() ) return; // no more posts?
+        if ( xapp.endless_in_loading() ) return xapp.callback_endless_in_loading(); // in loading?
+        var top = $document.height() - $window.height() - xapp.endless_trigger_distance_from_bottom; // compute page position
+        if ($window.scrollTop() >= top) xapp.endless_post_load_next_page(); // page reached at the bottom?
     });
 }());
 
@@ -42,19 +41,20 @@ xapp.endless_in_loading = function() {
 };
 
 /**
- * Returns xapp.endless_no_more_posts;
+ * Returns endless.no_more_posts;
  * @returns {boolean}
  */
-xapp.endless_no_more_posts = function () {
-    return xapp.endless_no_more_posts;
+endless.get_no_more_posts = function () {
+    return endless.no_more_posts;
 };
 /**
  * Sets there is no more posts from server.
  * @returns {boolean}
  */
-xapp.endless_set_no_more_posts = function() {
-    return xapp.endless_no_more_posts = true;
+endless.set_no_more_posts = function() {
+    return endless.no_more_posts = true;
 };
+
 
 xapp.endless_post_load_next_page = function() {
 
