@@ -31,12 +31,13 @@ xapp.endless_page = 0;
 }());
 
 
+/**
+ * Returns xapp.endless_in_process_loading
+ *
+ * @returns {number|boolean}
+ */
 xapp.endless_in_loading = function() {
-    if ( typeof xapp.endless_in_process_loading == 'undefined' ) {
-        xapp.endless_in_process_loading = false;
-        return false;
-    }
-    else return xapp.endless_in_process_loading;
+    return xapp.endless_in_process_loading;
 };
 
 xapp.endless_no_more_posts = function () {
