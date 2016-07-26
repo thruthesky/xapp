@@ -90,18 +90,18 @@ markup.post_list_page = function ( data ) {
     m += markup.get_post_list_page_header(data);
 
 
-    m += '  <div class="post-list-page-content">';
+    m += '  <div class="posts">';
 
     for ( var i in posts ) {
         var post = posts[i];
-        console.log(post);
+        // console.log(post);
         var url = post.guid;
         var post_content = post_list.get_content(post);
 
 
         var item = '' +
             '<div class="post" post-id="'+post.ID+'">';
-        item += '       <a href="'+url+'" api="action=post_view" class="post-title">';
+        item += '       <a href="'+url+'" api="action=post_view" class="title">';
         item += '          ' + post.post_title + '';
         item += '       </a>';
         item += '       <span class="meta">' +
@@ -109,7 +109,7 @@ markup.post_list_page = function ( data ) {
             '               <span class="buttons">' +
 
             '                   <span class="post-edit-button">Edit</span>' +
-            '                   <span class="post-delete-button">Delete</span>' +
+            '                   <span class="'+cl.post_delete_button()+'">Delete</span>' +
             '                   <span class="post-vote-button">Vote</span>' +
             '                   <span class="post-report-button">Report</span>' +
             '                   <span class="post-copy-button">Copy</span>' +
@@ -119,7 +119,7 @@ markup.post_list_page = function ( data ) {
 
             '               </span>' +
             '           </span>';
-        item += '       <section class="post-content">' + post_content + '</section>';
+        item += '       <section class="content">' + post_content + '</section>';
         item += markup.comment_write_form();
 
         item += '</div>';
@@ -139,7 +139,7 @@ markup.get_post_list_page_header = function ( data ) {
     var category = data.category;
     var page = get_page_no(data.in['page']);
     var m = '';
-    m += '  <div class="post-list-page-header">';
+    m += '  <div class="header">';
     m += '      <h4 class="list-group-item-heading">' + category['cat_name'] + '</h4>';
     m += '      <p class="list-group-item-text">' +
         '           <div class="meta">Page: '+page+', No. of Posts : '+ category['count'] +'</div>' +
@@ -155,7 +155,7 @@ markup.get_post_list_page_header = function ( data ) {
 
 
 markup.post_write_form = function ( $this ) {
-    var $header = $this.closest( '.post-list-page-header' );
+    var $header = $this.closest( '.header' );
     var $page = $header.parent();
     var page_no = $page.attr('page');
     var slug = $page.attr('slug');

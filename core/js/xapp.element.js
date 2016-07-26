@@ -41,6 +41,14 @@ sl.comment_write_form = function () { return '.' + cl.comment_write_form(); };
 el.comment_write_form = function () { return $( sl.comment_write_form() ); };
 
 
+
+
+cl.post_delete_button = function() { return 'post-delete-button'; };
+sl.post_delete_button = function () { return '.' + cl.post_delete_button(); };
+el.post_delete_button = function () { return $( sl.post_delete_button() ); };
+
+
+
 var register_form_message = el.register_form_display = function() {
     return $( '.user-register-form-message' );
 };

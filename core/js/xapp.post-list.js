@@ -12,7 +12,7 @@ var post_list = xapp.post_list = {};
 $(function() {
     var $body = $('body');
     //$body.on('click', ".post-edit-button", post_list.post_edit_button_clicked);
-    $body.on('click', ".post-delete-button", post_list.post_delete_button_clicked);
+    $body.on('click', sl.post_delete_button(), post_list.post_delete_button_clicked);
     $body.on('click', ".post-vote-button", post_list.post_vote_button_clicked);
     $body.on('click', ".post-report-button", post_list.post_report_button_clicked);
     $body.on('click', ".post-copy-button", post_list.post_copy_button_clicked);
@@ -41,7 +41,7 @@ post_list.comment_form_clicked = function() {
 post_list.show_more_clicked = function() {
     var $this = $(this);
     var $post = $this.parent();
-    var $content = $post.find('.post-content');
+    var $content = $post.find('.content');
     $content.css( {
         'overflow': 'visible',
         'max-height' : 'none'
@@ -91,8 +91,8 @@ post_list.post_edit_button_clicked = function() {
     var $m = $(markup.post_edit_form( $this ));
 
     var post_ID = $post.attr('post-id');
-    var title = trim($post.find('.post-title').text());
-    var content = trim( $post.find('.post-content').text());
+    var title = trim($post.find('.title').text());
+    var content = trim( $post.find('.content').text());
 
 
     $m.find('[name="post_ID"]').val( post_ID );
@@ -108,7 +108,17 @@ post_list.post_delete_button_clicked = function () {
     console.log('post delete button clicked');
     var $this = $(this);
     var $post = post_list.get_post( $this );
+    var post_ID = $post.attr('post-id');
+    var url = xapp.server_url + '?forum=post_delete_submit&response=ajax&session_id=' + xapp.session_id + '&post_ID=' + post_ID;
+    console.log(url);
+    $.get(url, function(re) {
+        if ( re.success  ) {
+            xapp.alert("POST deleted", "You have deleted a post.");
+            $post.remove();
+        }
+    } );
 };
+
 
 
 post_list.post_write_button_clicked =  function() {
@@ -121,7 +131,7 @@ post_list.post_write_button_clicked =  function() {
     }
 
     var $this = $(this);
-    var $header = $this.closest( '.post-list-page-header' );
+    var $header = $this.closest( '.header' );
     $header.after( markup.post_write_form( $this ) );
 };
 
@@ -130,18 +140,18 @@ post_list.post_write_button_clicked =  function() {
 xapp.callback_post_add_show_more = function (data) {
 
     ///;
-    $(".post-list-page[page='"+data.in['page']+"']").find('.post-list-page-content').find('.post').each(function(index, element){
+    $(".post-list-page[page='"+data.in['page']+"']").find('.post').each(function(index, element){
         //console.log(index);
         //console.log(element);
 
         var $post = $(element);
-        var $content = $post.find('.post-content');
+        var $content = $post.find('.content');
 
         // console.log($content);
 
 
-        //console.log($content[0].scrollHeight);
-        //console.log($content.innerHeight());
+        console.log($content[0].scrollHeight);
+        console.log($content.innerHeight());
         /**
          * if the height of content is over-wrapped.
          */
@@ -153,8 +163,8 @@ xapp.callback_post_add_show_more = function (data) {
             if ( $content[0].scrollHeight > $content.innerHeight() + 1) {
                 $content.css('background-color', '#efe9e9');
                 $content.after("<div class='show-more'>show more ..." +
-                        // "scrollHeight:" + $content[0].scrollHeight +
-                        // "innerHeight:" + $content.innerHeight() +
+                         //"scrollHeight:" + $content[0].scrollHeight +
+                         //"innerHeight:" + $content.innerHeight() +
                     "</div>");
             }
         //}
@@ -192,22 +202,28 @@ post_list.post_write_form_submit = function() {
     $this.prop('disabled', true);
     var $form = $this.closest('form');
     var url = xapp.server_url + '?' + $form.serialize();
-    // console.log(url);
+    console.log(url);
     $.post({
         'url' : url,
         'success' : function(re) {
-            // console.log(re);
-            if ( re.success ) {
-                if ( xapp.option.alert.after_post ) xapp.alert("POST Success", "You just have posted...", xapp.reload);
-                else xapp.reload();
+            console.log(re);
+            if ( typeof re.success ) {
+                if ( re.success ) {
+                    if ( xapp.option.alert.after_post ) xapp.alert("POST Success", "You just have posted...", xapp.reload);
+                    else xapp.reload();
+                }
+                else {
+                    xapp.alert( "Error on posting", re.data.message );
+                }
             }
             else {
-                xapp.alert( re.data );
+                xapp.alert("Server error", "Cannot parse response. There might be an error inside the server. ( Maybe it's a script error. )");
             }
+            $this.prop('disabled', false);
         },
         'error' : function () {
             $this.prop('disabled', false);
-            alert('error on post write form');
+            xapp.alert("Post query error", "Error occurs on post query.");
         }
     });
 };
@@ -237,8 +253,8 @@ post_list.post_edit_form_submit = function () {
             if ( re.success ) {
                 var title = $edit.find('[name="title"]').val();
                 var content = $edit.find('[name="content"]').val();
-                $post.find('.post-title').text( title );
-                $post.find('.post-content').html( sanitize_content(content) );
+                $post.find('.title').text( title );
+                $post.find('.content').html( sanitize_content(content) );
                 $edit.remove();
                 $post.show();
                 if ( xapp.option.alert.after_edit ) xapp.alert("EDIT Success", "You just have edited a post.");

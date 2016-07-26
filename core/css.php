@@ -27,11 +27,7 @@ if ( ! isset($_GET['debug']) ) {
 $files = [
     'bootstrap/bootstrap.min-2016-07-13.css',
     'font-awesome/css/font-awesome.min.css',
-    'css/base.css',
-    'css/layout.css',
-    'css/module.css',
-    'css/module-post-list.css',
-    'css/theme.css',
+    'css/main.css',
 ];
 
 

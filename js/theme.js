@@ -13,7 +13,7 @@ if ( typeof xapp == 'undefined' ) var xapp = {};
  */
 window.xappReady = function () {
     xapp.server_url = "http://work.org/wordpress/";
-    //xapp.server_url = "http://wordpress46b1.org/";
+    xapp.server_url = "http://wordpress46b1.org/";
     //xapp.server_url = "http://dev.withcenter.com/wordpress/";
     xapp.option.cache.post_list_expire = 0;
     xapp.option.cache.post_list = false;
@@ -38,6 +38,6 @@ function auto_show_register_form() {
 }
 function auto_show_write_forum() {
     setTimeout(function(){
-        $('.post-list-page-header .post').click();
+        $('.header .post').click();
     }, 1000);
 }

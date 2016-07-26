@@ -40,7 +40,7 @@ xapp.bs = xapp.bootstrap;
 xapp.local_url = 'index.html?';
 xapp.query = '';
 xapp.qv = {};
-//xapp.debug = true;          // true 이면 디버깅 모드를 실행한다.
+xapp.debug = true;          // true 이면 디버깅 모드를 실행한다. ajax 등을 할 때, timestamp dummy 를 추가한다.
 
 xapp.option = {};
 xapp.option.alert = {};
@@ -62,7 +62,7 @@ xapp.start = function () {
     else if ( this.isPostList() ) {
         var query = xapp.post_list_query_args( 0 );
         //xapp.wp_query( query );
-        xapp.endless_post_load_next_page();
+        endless.load_next_page();
     }
     else {
         alert("No route to go");
@@ -169,13 +169,16 @@ xapp.bind_api = function () {
 
 xapp.get = function ( url, success, error ) {
     //console.log('xapp.get() : ' + url);
-    $.ajax( {
+
+    var o = {
         url: url,
-        // async: true,
-        cache: false,
         success: success,
         error: error
-    } );
+    };
+
+    if ( xapp.debug ) o.cache = false;
+
+    $.ajax( o );
 };
 
 

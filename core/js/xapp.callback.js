@@ -37,14 +37,12 @@ xapp.callback_endless_post_list = function( re ) { // Callback for display post 
 };
 
 
-xapp.callback_endless_begin_loading = function() {
-    layout.main().append('<i class="post-list-loader fa fa-spinner fa-pulse fa-3x fa-fw"></i>');
-    xapp.endless_in_process_loading = true;
-};
+
+
 
 xapp.callback_endless_finish_loading = function() {
     layout.main().find('.post-list-loader').remove();
-    xapp.endless_in_process_loading = false;
+    endless.in_loading = false;
 };
 
 
@@ -109,7 +107,7 @@ xapp.post_list_query_args = function ( page ) {
         expire : xapp.option.cache.post_list_expire,
         success : this.callback_endless_post_list,
         'failure' : function ( re ) {
-            alert('ERROR on failre');
+            alert('ERROR on xforum api query. Please check if the server url correctly set.');
         }
     };
     if ( xapp.option.cache.post_list ) {
