@@ -20,7 +20,7 @@ window.xappReady = function () {
     xapp.start();
     console.log('index.js $(function() { ... }); finished.');
     /// TEST ...
-     auto_show_write_forum();
+     // auto_show_write_forum();
     //auto_show_login_form();
     //auto_show_register_form();
 
@@ -38,6 +38,6 @@ function auto_show_register_form() {
 }
 function auto_show_write_forum() {
     setTimeout(function(){
-        $('.header .post').click();
+        $('.post-list-page[page="1"] ' + sel(post_write_button)).click();
     }, 1000);
 }

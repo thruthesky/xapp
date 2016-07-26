@@ -1,6 +1,4 @@
 html, body {
-    font-size: $font-size;
-    font-family: $font-family;
 }
 html {
 
@@ -10,6 +8,7 @@ body {
 }
 
 body > section.page > div.page-content {
+    background-color: $color-background;
     font-size: $font-size;
     font-family: $font-family;
 }

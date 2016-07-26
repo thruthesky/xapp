@@ -1,3 +1,26 @@
+$margin-post-item: 0 0 .4rem;
+$padding-post-item: .3rem;
+$button-font-size: 9pt;
+
+
+
+
+
+
+%post-form-box {
+    margin: 0  0 .2rem;
+    padding: .3rem;
+    background-color: grey;
+}
+@mixin post-form {
+    @extend %post-form-box;
+    [name="title"] {
+    }
+    [name="content"] {
+        height: 10em;
+    }
+}
+
 .post-list-page {
     margin-bottom: 1rem;
 
@@ -18,9 +41,19 @@
         word-break: break-all;
 
         .meta {
-            display: block;
-            padding: .2rem;
-            background-color: white;
+            margin: $margin-post-item;
+            .info {
+                margin: $margin-post-item;
+                padding: $padding-post-item;
+                background-color: $color-background;
+            }
+            .buttons {
+                padding: $padding-post-item;
+                font-size: $button-font-size;
+                span {
+                    cursor: pointer;
+                }
+            }
         }
 
         .title {
@@ -48,38 +81,53 @@
         }
 
 
-        .comment-write-form {
-            .buttons {
-                display:none;
-            }
-            textarea {
-                width: 100%;
-                height: 38px;
-            }
-            &.selected {
-                textarea {
-                    height: 120px;
-                }
-                .buttons {
-                    display:block;
-                }
-            }
-        } // eo .comment-write-form
-
-
     } // eo .post
 
 }
 
-
-
-
-
-
-
-
-
-/* post edit */
-.post-edit-form {
-    background-color: grey;
+.comments {
+    .buttons {
+        font-size: $button-font-size;
+    }
 }
+
+
+
+/// POST WRITE FORM
+.post-write-form {
+    @include post-form;
+}
+
+/// POST EDIT FORM
+.post-edit-form {
+    @include post-form;
+}
+
+/// COMMENT EDIT FORM
+.comment-edit-form {
+    @extend %post-form-box;
+    [name="comment_content"] {
+        width: 100%;
+        height: 10em;
+    }
+}
+
+
+
+.comment-write-form {
+    .buttons {
+        display:none;
+    }
+    textarea {
+        width: 100%;
+        height: 38px;
+    }
+    &.selected {
+        textarea {
+            height: 120px;
+        }
+        .buttons {
+            display:block;
+        }
+    }
+} // eo .comment-write-form

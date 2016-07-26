@@ -59,7 +59,7 @@ xapp.callback_register_form_submit = function () {
 };
 
 xapp.callback_login_button_clicked = function () {
-    el.user_login_form().remove();
+    user_login_form().remove();
     var m = markup.user_login_form();
     layout.main().prepend( m );
 };
@@ -89,12 +89,12 @@ xapp.callback_login_form_submit = function () {
 };
 
 xapp.callback_login_form_cancel = function () {
-    el.user_login_form().remove();
+    user_login_form().remove();
 };
 
 
 xapp.callback_register_button_clicked = function () {
-    el.user_register_form().remove();
+    register_form.remove();
     var m = markup.user_register_form();
     layout.main().prepend( m );
 

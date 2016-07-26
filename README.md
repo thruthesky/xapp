@@ -65,6 +65,34 @@ A framework which has some fundamental functions to serve for app(web-app) with 
 
 # Coding Guide
 
+
+## Element class, selector, element object
+
+for element class name holder, just use variable name - 'comment_write_button'
+for element selector, use sel('comment_write_button')
+for element object, use ele('comment_write_button')
+
+
+## Getting Object and HTML of a node.
+
+if a function name begins with 'get_' then, it returns the HTML of the node or value of the node.
+if a function name begins without 'get_', then it returns the jQuery object of the node.
+
+if a function name conflicts with 'element class name', then use 'obj_'.
+
+example:
+ 
+    * markup.get_comments_meta_count( post.comment_count ) return 'HTML Markup'
+    * get_comments_meta_count( post_ID ) returns the 'no of comments'.
+    * comments_meta_count( post_ID ) return 'jQuery object of the node'
+
+example of real code;
+
+    * comments_meta_count( post_ID ).html( markup.get_comments_meta_count( get_comments_meta_count(post_ID) + 1 ) );
+
+
+
+
 ## CSS & Javascript loading
 
 * xapp loads CSS & JS thru PHP and gets the benefits of mixing CSS & JS & PHP. ( php 로 CSS 와 JS 를 로딩해서 compile 이나 304 not modified 등에 활용한다. )

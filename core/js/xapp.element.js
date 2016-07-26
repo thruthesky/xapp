@@ -7,64 +7,89 @@ layout.main = function() {
 };
 
 
-var cl = xapp.classes = {};                 // class name only
-var sl = selector = xapp.selector = {};     // selector only.
-var el = element = xapp.element = {};       // select element.
+var sl = sel = function ( cls ) {
+    return '.' + cls;
+};
+var el = ele = function ( cls ) {
+    return $('.' + cls);
+};
+
+
+var post_write_form = 'post-write-form';
+var post_write_button = 'post-write-button';
+var post_edit_form = 'post-edit-form';
+var post_edit_button = 'post-edit-button';
+var post_delete_button = 'post-delete-button';
+var comment_write_form = 'comment-write-form';
+
+var comment_write_button = 'comment-write-button';
+var comment_cancel_button = 'comment-cancel-button';
+
+
+comment_edit_form = 'comment-edit-form';
+
+comment_edit_button = 'comment-edit-button';
+comment_delete_button = 'comment-delete-button';
+comment_vote_button = 'comment-vote-button';
+comment_report_button = 'comment-report-button';
+comment_copy_button = 'comment-copy-button';
+comment_move_button = 'comment-move-button';
+comment_blind_button = 'comment-blind-button';
+comment_block_button = 'comment-block-button';
 
 
 
 
 
-cl.post_write_form = function() { return 'post-write-form'; };
-sl.post_write_form = function() { return '.' + cl.post_write_form(); };
-el.post_write_form = function() { return $( sl.post_write_form() ); };
 
-
-cl.post_write_button = function() { return 'post-write-button'; };
-sl.post_write_button = function () { return '.' + cl.post_write_button(); };
-el.post_write_button = function () { return $( sl.post_write_button() ); };
-
-
-
-cl.post_edit_form = function() { return 'post-edit-form'; };
-sl.post_edit_form = function() { return '.' + cl.post_edit_form(); };
-el.post_edit_form = function() { return $( sl.post_edit_form() ); };
-
-
-cl.post_edit_button = function() { return 'post-edit-button'; };
-sl.post_edit_button = function () { return '.' + cl.post_edit_button(); };
-el.post_edit_button = function () { return $( sl.post_edit_button() ); };
-
-
-cl.comment_write_form = function() { return 'comment-write-form'; };
-sl.comment_write_form = function () { return '.' + cl.comment_write_form(); };
-el.comment_write_form = function () { return $( sl.comment_write_form() ); };
-
-
-
-
-cl.post_delete_button = function() { return 'post-delete-button'; };
-sl.post_delete_button = function () { return '.' + cl.post_delete_button(); };
-el.post_delete_button = function () { return $( sl.post_delete_button() ); };
-
-
-
-var register_form_message = el.register_form_display = function() {
+var register_form_message = function() {
     return $( '.user-register-form-message' );
 };
 
 
-var register_form = el.user_register_form = el.register_form = function() {
+var register_form = function() {
     return $('.user-register-form');
 };
 
 
 
-var login_form_message = el.login_form_display = function() {
+var login_form_message = function() {
     return $( '.user-login-form-message' );
 };
 
 
-el.user_login_form = function () {
+var user_login_form = function () {
     return $('.user-login-form');
 };
+
+
+/**
+ * Returns jQuery object of 'comment count'. It is the '.count' node.
+ * @param post_ID
+ * @returns {*|{}}
+ */
+var comments_meta_count = function( post_ID ) {
+    return post( post_ID ).find('.comments .meta .count');
+};
+
+/**
+ * Returns the no of count.
+ *
+ * @param post_ID
+ * @returns int
+ */
+var get_comments_meta_count = function ( post_ID ) {
+    var m = comments_meta_count( post_ID );
+    var $m = $( m );
+    if ( $m.find('.no-comment').length ) {
+        return 0;
+    }
+    else {
+        return parseInt( $m.find('.no').text() );
+    }
+};
+
+
+
+
+
