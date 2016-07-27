@@ -93,10 +93,11 @@ markup.post_list_page = function ( data ) {
         console.log(post);
         var url = post.guid;
         var post_content = get_content(post);
+        if ( isEmpty(post.like) ) post.like = '';
 
 
-        var item = '' +
-            '<div class="post" post-id="'+post.ID+'">';
+        var item = '<div class="post" post-id="'+post.ID+'">';
+        item += '   <section class="display">';
         item += '       <a href="'+url+'" api="action=post_view" class="title">';
         item += '          ' + post.post_title + '';
         item += '       </a>';
@@ -110,7 +111,7 @@ markup.post_list_page = function ( data ) {
             '               <div class="buttons">' +
             '                   <span class="post-edit-button">Edit</span>' +
             '                   <span class="'+post_delete_button+'">Delete</span>' +
-            '                   <span class="post-vote-button">Vote</span>' +
+            '                   <span class="'+post_like_button+'">like<span class="no">'+post.like+'</span></span>' +
             '                   <span class="post-report-button">Report</span>' +
             '                   <span class="post-copy-button">Copy</span>' +
             '                   <span class="post-move-button">Move</span>' +
@@ -120,7 +121,7 @@ markup.post_list_page = function ( data ) {
             '           </div>';
         item += '       <section class="content">' + post_content + '</section>';
         item += markup.comment_write_form( post.ID );
-
+        item += '</section>';
         item += markup.comments( post );
 
         item += '</div>';
@@ -169,8 +170,11 @@ markup.comments = function( post ) {
 
 
 markup.comment = function( comment ) {
+    if ( isEmpty(comment.depth) ) comment.depth = 0;
+    var cls = 'comment';
+    if ( comment.comment_content  == xapp.deleted ) cls += ' deleted';
     return '' +
-        '<div class="comment" comment-ID="'+comment.comment_ID+'" depth="'+comment.depth+'">' +
+        '<div class="'+cls+'" comment-ID="'+comment.comment_ID+'" depth="'+comment.depth+'">' +
         '   <div class="comment-meta">' +
         '       <div>' +
         '           No.: ' + comment.comment_ID +

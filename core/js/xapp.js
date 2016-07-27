@@ -41,6 +41,7 @@ xapp.query = '';
 xapp.qv = {};
 xapp.debug = true;          // true 이면 디버깅 모드를 실행한다. ajax 등을 할 때, timestamp dummy 를 추가한다.
 
+xapp.deleted = 'deleted, ...';
 xapp.option = {};
 xapp.option.alert = {};
 xapp.option.cache = {};
@@ -247,6 +248,10 @@ x.hasParent = function () {
     return !(typeof x.obj.comment_parent == 'undefined' || isEmpty(x.obj.comment_parent));
 };
 
+
+x.isWPComment = function() {
+    return x.obj.comment_ID;
+};
 /**
  * Inserts a post or a comment in the post-list/comment-list
  *
@@ -258,19 +263,32 @@ x.insert = function() {
     }
     else if ( o.comment_ID ) { // comment
         var comment = o;
-        var m = markup.comment( comment );
+        var $m = $( markup.comment( comment ) );
         if ( x.hasParent() ) {
             var $p = x.findParent();
             var depth = parseInt($p.attr('depth')) + 1;
-            var $m = $( m );
             $m.attr('depth', depth);
             $p.after( $m );
         }
         else {
-            post_comment_list( comment.post_ID ).prepend( m );
+            post_comment_list( comment.post_ID ).prepend( $m );
         }
     }
 };
+
+/**
+ *
+ */
+x.replace = function() {
+    if ( x.isWPComment() ) {
+        var $m = $( x.markup() );
+        var $c = x.getComment();
+        $m.attr('depth', $c.attr('depth'));
+        $c.replaceWith( $m );
+    }
+};
+
+
 /**
  *
  * Returns jQuery object of the comment Node for x.obj
@@ -280,14 +298,17 @@ x.insert = function() {
  *
  * @return $
  */
-x.findComment = function() {
+x.getComment = x.findComment = function() {
     var obj = x.obj;
-    if ( obj.comment_ID ) return $('.comment[comment-id="'+ comment_ID +'"]');   // WP_Object
+    if ( obj.comment_ID ) return $('.comment[comment-id="'+ obj.comment_ID +'"]');   // WP_Object
     else if ( isNumber( obj ) ) return $('.comment[comment-id="'+ obj +'"]');   // comment_ID
     else if ( isjQuery( obj ) ) return obj.closest( '.comment' );                  // jQuery Object
     else if ( isNode( obj ) ) return $(obj).closest( '.comment' );                 // Node
     else return null;
 };
+
+
+
 /**
  *
  * Returns jQuery object of the parent comment Node for x.obj
@@ -308,6 +329,33 @@ x.getCommentID = function () {
 };
 
 
+
+
+x.getPostID = function () {
+    return x.getPost().attr('post-id');
+};
+
+/**
+ * Returns null or jQuery object based on x.obj
+ *
+ *      - x.obj can be
+ *
+ *          - Node
+ *
+ *              - Any HTML node under post or even comment will find a post.
+ *
+ *          - jQuery object.
+ *
+ *              - Just like 'node', it will search for the nearest '.post'
+ *
+ *              - it works on any object of post or comment.
+ *
+ *          - Number
+ *
+ *              - it find the '.post' which has the post id.
+ *
+ * @returns {*}
+ */
 x.getPost = function() {
     var obj = x.obj;
     if ( isNumber(obj) ) {
@@ -323,5 +371,27 @@ x.getPost = function() {
 };
 
 
+/**
+ *
+ * if x.obj is WP_Comment object, then it return HTML Markup for comment rendering.
+ * if x.obj is WP_Post object, then it returns HTML Markup for post.
+ */
+x.markup = function() {
+    if ( x.isWPComment() ) {
+        return markup.comment( x.obj );
+    }
+};
 
 
+
+x.success = function ( re ) {
+
+    if ( typeof re.success == 'undefined' ) {
+        xapp.alert('Server failed...', 'Malformed server response. Server script printed error.');
+        return false;
+    }
+    else if ( re.success ) return true;
+    else {
+        xapp.alert("Error ...", re['data']['message']);
+    }
+};

@@ -20,6 +20,7 @@ var post_write_button = 'post-write-button';
 var post_edit_form = 'post-edit-form';
 var post_edit_button = 'post-edit-button';
 var post_delete_button = 'post-delete-button';
+var post_like_button = 'post-like-button';
 
 var comment_write_form = 'comment-write-form';
 var comment_write_button = 'comment-write-button';

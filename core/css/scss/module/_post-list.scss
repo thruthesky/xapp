@@ -1,7 +1,6 @@
 $margin-post-item: 0 0 .4rem;
 $padding-post-item: .3rem;
 $button-font-size: 9pt;
-
 %post-form-box {
     margin: 0  0 .2rem;
     padding: .3rem;
@@ -25,32 +24,32 @@ $button-font-size: 9pt;
     .header {
         margin-bottom: 1rem;
         padding: .4rem;
-        background-color: #d5dde8;
+        background-color: $background-color-post-header;
     }
 
     .posts {
 
     }
     .post {
-
         margin-bottom: 1rem;
-        padding: .4rem;
-        background-color: #ebf1ea;
         word-break: break-all;
+
+        .display {
+            margin: $margin-post-item;
+            padding: $padding-post-item;
+            background-color: $background-color-post;
+        }
 
         .meta {
             margin: $margin-post-item;
             .info {
                 margin: $margin-post-item;
                 padding: $padding-post-item;
-                background-color: $color-background;
             }
             .buttons {
                 padding: $padding-post-item;
                 font-size: $button-font-size;
-                span {
-                    cursor: pointer;
-                }
+                span { cursor: pointer; }
             }
         }
 
@@ -65,14 +64,13 @@ $button-font-size: 9pt;
                 color: #02E;
                 text-decoration: none;
             }
-        }
-
+        } // .post .title
 
         .content {
             line-height: 1.4em;
             max-height: 5.6em;
             overflow: hidden;
-            
+
             img {
                 max-width: 100%;
             }
@@ -91,23 +89,40 @@ $button-font-size: 9pt;
 
 /// comment node
 .comment {
+    margin: $margin-post-item;
+    padding: $padding-post-item;
+    .comment-meta {
+        .buttons {
+            span { cursor: pointer; }
+        }
+    }
     .comment-content {
         @include post-padding;
-        background-color: $color-background;
     }
-    &[depth='1'] { margin-left: 0; }
-    &[depth='2'] { margin-left: 1em; background-color: #eff3f3; }
-    &[depth='3'] { margin-left: 2em; background-color: #d0e0e0; }
-    &[depth='4'] { margin-left: 3em; background-color: #c0d0d0; }
-    &[depth='5'] { margin-left: 5em; background-color: #c0d0d0; }
-    &[depth='6'] { margin-left: 5.5em; background-color: #cdcdcd; }
-    &[depth='7'] { margin-left: 6em; background-color: #c0d0d0; }
+    &[depth='0'], &[depth='1'] { margin-left: 0; background-color: #e0e4e4; }
+    &[depth='2'] { margin-left: 1em; background-color: #e4e8e8; }
+    &[depth='3'] { margin-left: 2em; background-color: #ebefef; }
+    &[depth='4'] { margin-left: 3em; background-color: #f1f5f5; }
+    &[depth='5'] { margin-left: 5em; background-color: #f5f2ed; }
+    &[depth='6'] { margin-left: 5.5em; background-color: #f6f3ee; }
+        &[depth='7'] { margin-left: 6em; background-color: #fffcf6; }
     &[depth='8'] { margin-left: 6.4em; background-color: #c0d0d0; }
     &[depth='9'] { margin-left: 6.8em; background-color: #c0d0d0; }
     &[depth='10'] { margin-left: 7.2em; background-color: #c0d0d0; }
-    &[depth='11'] { margin-left: 7.6em; background-color: #c0d0d0; }
+    &[depth='11'],&[depth='12'],&[depth='13'],&[depth='14'],&[depth='15'],&[depth='16'] {
+        margin-left: 7.6em; background-color: #c0d0d0;
+    }
 
 }
+
+/// deleted comments
+.comment.deleted {
+    background-color: $background-color-deleted;
+    .comment-meta {
+        .buttons { display: none; }
+    }
+}
+
 
 /// POST WRITE FORM
 .post-write-form {

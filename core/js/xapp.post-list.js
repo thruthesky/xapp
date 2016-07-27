@@ -13,7 +13,7 @@ $(function() {
     var $body = $('body');
 
     $body.on('click', sel(post_edit_button), post_list.post_edit_button_clicked);
-    $body.on('click', ".post-vote-button", post_list.post_vote_button_clicked);
+    $body.on('click', sl(post_like_button), post_list.post_like_button_clicked);
     $body.on('click', ".post-report-button", post_list.post_report_button_clicked);
     $body.on('click', ".post-copy-button", post_list.post_copy_button_clicked);
     $body.on('click', ".post-move-button", post_list.post_move_button_clicked);
@@ -128,12 +128,17 @@ post_list.post_delete_button_clicked = function () {
     var $this = $(this);
     var $post = get_post( $this );
     var post_ID = $post.attr('post-id');
-    var url = xapp.server_url + '?forum=post_delete_submit&response=ajax&session_id=' + xapp.session_id + '&post_ID=' + post_ID;
+    var url = xapp.server_url + '?forum=post_delete_submit&response=ajax' +
+        '&session_id=' + xapp.session_id +
+        '&post_ID=' + post_ID;
     console.log(url);
     $.get(url, function(re) {
         if ( re.success  ) {
-            xapp.alert("POST deleted", "You have deleted a post.");
+            xapp.alert("Success", "You have deleted a post.");
             $post.remove();
+        }
+        else {
+            xapp.alert("Failed ...", re['data']['message']);
         }
     } );
 };
@@ -193,9 +198,20 @@ xapp.callback_post_add_show_more = function (data) {
 
 
 
-post_list.post_vote_button_clicked = function () {
-
+post_list.post_like_button_clicked = function () {
+    var $like_button = $(this);
+    var post_ID = x.getPostID();
+    var url = xapp.server_url +
+        '?forum=post_like' +
+        '&response=ajax' +
+        '&session_id=' + xapp.session_id +
+        '&post_ID=' + post_ID;
+    console.log(url);
+    $.get(url, function(re) {
+        if ( x.success( re ) ) $like_button.find('.no').text( re.data.like );
+    } );
 };
+
 
 post_list.post_report_button_clicked = function () {
 
@@ -435,22 +451,27 @@ post_list.comment_edit_button_clicked = function () {
 post_list.comment_delete_button_clicked = function () {
     // console.log('comment delete');
 
-    var comment_ID = get_comment_id( this );
-    var y = x( this );
 
-    var comment_ID = y.getCommentID();
-    var $post = y.getPostID();
-
-    //console.log('comment_ID: ' + comment_ID);
-    var $this = $(this);
-    var $post = get_post( $this );
+    x( this );
+    var $comment = x.getComment();
+    var comment_ID = x.getCommentID();
+    var $post = x.getPost();
     var post_ID = $post.attr('post-id');
-    var url = xapp.server_url + '?forum=post_delete_submit&response=ajax&session_id=' + xapp.session_id + '&post_ID=' + post_ID;
+
+    var url = xapp.server_url +
+        '?forum=comment_delete_submit&response=ajax' +
+        '&session_id=' + xapp.session_id +
+        '&comment_ID=' + comment_ID;
     console.log(url);
     $.get(url, function(re) {
         if ( re.success  ) {
-            xapp.alert("POST deleted", "You have deleted a post.");
-            $post.remove();
+            xapp.alert("Comment deleted", "You have deleted a comment.");
+
+            //
+            x( re.data.comment ).replace();
+        }
+        else {
+            xapp.alert("Failed ...", re['data']['message']);
         }
     } );
 };

@@ -1,8 +1,11 @@
 /**
  *
  */
+html, body {
+  background-color: white; }
+
 body > section.page > div.page-content {
-  background-color: #fbfbfb;
+  background-color: #f9f9f9;
   font-size: 12pt;
   font-family: "Malgun Gothic", "AppleGothic", "Gulim", serif; }
 
@@ -13,6 +16,9 @@ body > section.page a {
 
 .page-content {
   padding: .4em; }
+
+.page-content {
+  background-color: #f9f9f9; }
 
 .post-write-form, .post-edit-form, .comment-edit-form {
   margin: 0  0 .2rem;
@@ -27,15 +33,16 @@ body > section.page a {
     background-color: #d5dde8; }
   .post-list-page .post {
     margin-bottom: 1rem;
-    padding: .4rem;
-    background-color: #ebf1ea;
     word-break: break-all; }
+    .post-list-page .post .display {
+      margin: 0 0 0.4rem;
+      padding: 0.3rem;
+      background-color: #c8d5e4; }
     .post-list-page .post .meta {
       margin: 0 0 0.4rem; }
       .post-list-page .post .meta .info {
         margin: 0 0 0.4rem;
-        padding: 0.3rem;
-        background-color: #fbfbfb; }
+        padding: 0.3rem; }
       .post-list-page .post .meta .buttons {
         padding: 0.3rem;
         font-size: 9pt; }
@@ -61,41 +68,51 @@ body > section.page a {
 .comments .buttons {
   font-size: 9pt; }
 
-.comment .comment-content {
-  padding: .4rem;
-  background-color: #fbfbfb; }
-.comment[depth='1'] {
-  margin-left: 0; }
-.comment[depth='2'] {
-  margin-left: 1em;
-  background-color: #eff3f3; }
-.comment[depth='3'] {
-  margin-left: 2em;
-  background-color: #d0e0e0; }
-.comment[depth='4'] {
-  margin-left: 3em;
-  background-color: #c0d0d0; }
-.comment[depth='5'] {
-  margin-left: 5em;
-  background-color: #c0d0d0; }
-.comment[depth='6'] {
-  margin-left: 5.5em;
-  background-color: #cdcdcd; }
-.comment[depth='7'] {
-  margin-left: 6em;
-  background-color: #c0d0d0; }
-.comment[depth='8'] {
-  margin-left: 6.4em;
-  background-color: #c0d0d0; }
-.comment[depth='9'] {
-  margin-left: 6.8em;
-  background-color: #c0d0d0; }
-.comment[depth='10'] {
-  margin-left: 7.2em;
-  background-color: #c0d0d0; }
-.comment[depth='11'] {
-  margin-left: 7.6em;
-  background-color: #c0d0d0; }
+.comment {
+  margin: 0 0 0.4rem;
+  padding: 0.3rem; }
+  .comment .comment-meta .buttons span {
+    cursor: pointer; }
+  .comment .comment-content {
+    padding: .4rem; }
+  .comment[depth='0'], .comment[depth='1'] {
+    margin-left: 0;
+    background-color: #e0e4e4; }
+  .comment[depth='2'] {
+    margin-left: 1em;
+    background-color: #e4e8e8; }
+  .comment[depth='3'] {
+    margin-left: 2em;
+    background-color: #ebefef; }
+  .comment[depth='4'] {
+    margin-left: 3em;
+    background-color: #f1f5f5; }
+  .comment[depth='5'] {
+    margin-left: 5em;
+    background-color: #f5f2ed; }
+  .comment[depth='6'] {
+    margin-left: 5.5em;
+    background-color: #f6f3ee; }
+  .comment[depth='7'] {
+    margin-left: 6em;
+    background-color: #fffcf6; }
+  .comment[depth='8'] {
+    margin-left: 6.4em;
+    background-color: #c0d0d0; }
+  .comment[depth='9'] {
+    margin-left: 6.8em;
+    background-color: #c0d0d0; }
+  .comment[depth='10'] {
+    margin-left: 7.2em;
+    background-color: #c0d0d0; }
+  .comment[depth='11'], .comment[depth='12'], .comment[depth='13'], .comment[depth='14'], .comment[depth='15'], .comment[depth='16'] {
+    margin-left: 7.6em;
+    background-color: #c0d0d0; }
+
+.comment.deleted {
+  background-color: #e6dfd4; }
+  .comment.deleted .comment-meta .buttons {
+    display: none; }
 
 .post-write-form [name="content"] {
   height: 10em; }
