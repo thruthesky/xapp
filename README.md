@@ -78,7 +78,8 @@ for element object, use ele('comment_write_button')
 if a function name begins with 'get_' then, it returns the HTML of the node or value of the node.
 if a function name begins without 'get_', then it returns the jQuery object of the node.
 
-if a function name conflicts with 'element class name', then use 'obj_'.
+if a function name conflicts with 'element class name', then use 'find_' for singular, 'find______s' for plural
+
 
 example:
  

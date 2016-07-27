@@ -2,7 +2,7 @@
  *
  */
 body > section.page > div.page-content {
-  background-color: #f9f9f9;
+  background-color: #fbfbfb;
   font-size: 12pt;
   font-family: "Malgun Gothic", "AppleGothic", "Gulim", serif; }
 
@@ -35,7 +35,7 @@ body > section.page a {
       .post-list-page .post .meta .info {
         margin: 0 0 0.4rem;
         padding: 0.3rem;
-        background-color: #f9f9f9; }
+        background-color: #fbfbfb; }
       .post-list-page .post .meta .buttons {
         padding: 0.3rem;
         font-size: 9pt; }
@@ -61,6 +61,42 @@ body > section.page a {
 .comments .buttons {
   font-size: 9pt; }
 
+.comment .comment-content {
+  padding: .4rem;
+  background-color: #fbfbfb; }
+.comment[depth='1'] {
+  margin-left: 0; }
+.comment[depth='2'] {
+  margin-left: 1em;
+  background-color: #eff3f3; }
+.comment[depth='3'] {
+  margin-left: 2em;
+  background-color: #d0e0e0; }
+.comment[depth='4'] {
+  margin-left: 3em;
+  background-color: #c0d0d0; }
+.comment[depth='5'] {
+  margin-left: 5em;
+  background-color: #c0d0d0; }
+.comment[depth='6'] {
+  margin-left: 5.5em;
+  background-color: #cdcdcd; }
+.comment[depth='7'] {
+  margin-left: 6em;
+  background-color: #c0d0d0; }
+.comment[depth='8'] {
+  margin-left: 6.4em;
+  background-color: #c0d0d0; }
+.comment[depth='9'] {
+  margin-left: 6.8em;
+  background-color: #c0d0d0; }
+.comment[depth='10'] {
+  margin-left: 7.2em;
+  background-color: #c0d0d0; }
+.comment[depth='11'] {
+  margin-left: 7.6em;
+  background-color: #c0d0d0; }
+
 .post-write-form [name="content"] {
   height: 10em; }
 
@@ -73,12 +109,19 @@ body > section.page a {
 
 .comment-write-form .buttons {
   display: none; }
+.comment-write-form .fa-camera {
+  font-size: 1.6em; }
 .comment-write-form textarea {
   width: 100%;
-  height: 38px; }
-.comment-write-form.selected textarea {
-  height: 120px; }
-.comment-write-form.selected .buttons {
-  display: block; }
+  height: 2em; }
+.comment-write-form.selected {
+  padding: 0.3rem;
+  background-color: #e9e9e9; }
+  .comment-write-form.selected .fa-camera {
+    font-size: 2em; }
+  .comment-write-form.selected textarea {
+    height: 120px; }
+  .comment-write-form.selected .buttons {
+    display: block; }
 
 /*# sourceMappingURL=main.css.map */

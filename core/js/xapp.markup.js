@@ -170,7 +170,7 @@ markup.comments = function( post ) {
 
 markup.comment = function( comment ) {
     return '' +
-        '<div class="comment" comment-ID="'+comment.comment_ID+'">' +
+        '<div class="comment" comment-ID="'+comment.comment_ID+'" depth="'+comment.depth+'">' +
         '   <div class="comment-meta">' +
         '       <div>' +
         '           No.: ' + comment.comment_ID +
@@ -193,6 +193,9 @@ markup.comment = function( comment ) {
             // sanitize_content( comment.comment_content ) +
             get_content( comment ) +
         '</div>' +
+
+        markup.comment_write_form( comment.comment_post_ID, comment.comment_ID ) +
+
         '' +
         '</div>';
 };
@@ -382,7 +385,7 @@ markup.comment_write_form = function( post_ID, comment_parent ) {
         '   <table>' +
         '       <tr valign="top">' +
         '           <td>' +
-        '               <i class="fa fa-camera fa-2x"></i>' +
+        '               <i class="fa fa-camera"></i>' +
         '           </td>' +
         '           <td width="99%">' +
         '               <textarea name="comment_content"></textarea>' +
@@ -422,6 +425,7 @@ markup.comment_edit_form = function ( $comment ) {
         '       </tr>' +
         '       <tr>' +
         '           <td></td>' +
+
         '           <td class="buttons">' +
         '               <button class="submit" type="button">Submit</button>' +
         '               <button class="cancel" type="button">Cancel</button>' +

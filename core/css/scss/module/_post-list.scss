@@ -2,11 +2,6 @@ $margin-post-item: 0 0 .4rem;
 $padding-post-item: .3rem;
 $button-font-size: 9pt;
 
-
-
-
-
-
 %post-form-box {
     margin: 0  0 .2rem;
     padding: .3rem;
@@ -19,6 +14,9 @@ $button-font-size: 9pt;
     [name="content"] {
         height: 10em;
     }
+}
+@mixin post-padding {
+    padding: .4rem;
 }
 
 .post-list-page {
@@ -80,18 +78,36 @@ $button-font-size: 9pt;
             }
         }
 
-
     } // eo .post
 
 }
 
+/// comments ( list ) of all comment node
 .comments {
     .buttons {
         font-size: $button-font-size;
     }
 }
 
+/// comment node
+.comment {
+    .comment-content {
+        @include post-padding;
+        background-color: $color-background;
+    }
+    &[depth='1'] { margin-left: 0; }
+    &[depth='2'] { margin-left: 1em; background-color: #eff3f3; }
+    &[depth='3'] { margin-left: 2em; background-color: #d0e0e0; }
+    &[depth='4'] { margin-left: 3em; background-color: #c0d0d0; }
+    &[depth='5'] { margin-left: 5em; background-color: #c0d0d0; }
+    &[depth='6'] { margin-left: 5.5em; background-color: #cdcdcd; }
+    &[depth='7'] { margin-left: 6em; background-color: #c0d0d0; }
+    &[depth='8'] { margin-left: 6.4em; background-color: #c0d0d0; }
+    &[depth='9'] { margin-left: 6.8em; background-color: #c0d0d0; }
+    &[depth='10'] { margin-left: 7.2em; background-color: #c0d0d0; }
+    &[depth='11'] { margin-left: 7.6em; background-color: #c0d0d0; }
 
+}
 
 /// POST WRITE FORM
 .post-write-form {
@@ -112,17 +128,24 @@ $button-font-size: 9pt;
     }
 }
 
-
-
+/// COMMENT WRITE FORM ( Under a post or under a comment ( of another comment ) ).
 .comment-write-form {
     .buttons {
         display:none;
     }
+    .fa-camera {
+        font-size: 1.6em;
+    }
     textarea {
         width: 100%;
-        height: 38px;
+        height: 2em;
     }
     &.selected {
+        padding: $padding-post-item;
+        background-color: $color-background-focus;
+        .fa-camera {
+            font-size: 2em;
+        }
         textarea {
             height: 120px;
         }

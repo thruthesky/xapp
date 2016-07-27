@@ -35,8 +35,7 @@ if ( typeof xapp == 'undefined' ) var xapp = {};
 var db = Lockr;
 xapp.bootstrap = {};
 xapp.bs = xapp.bootstrap;
-
-
+var x = xapp.x = function( obj ) { x.obj = obj; return x; };
 xapp.local_url = 'index.html?';
 xapp.query = '';
 xapp.qv = {};
@@ -234,4 +233,95 @@ xapp.get_error_message = function (data) {
     var message = data.message;
     return "ERROR(" + code + ") " + message;
 };
+
+
+/**
+ *
+ * Returns true if the WP_Comment has parent.
+ *
+ * @note This is only for comment.
+ * @note x.obj must be WP_Comment object.
+ * @returns {boolean}
+ */
+x.hasParent = function () {
+    return !(typeof x.obj.comment_parent == 'undefined' || isEmpty(x.obj.comment_parent));
+};
+
+/**
+ * Inserts a post or a comment in the post-list/comment-list
+ *
+ */
+x.insert = function() {
+    var o = x.obj;
+    if ( o.ID ) {
+
+    }
+    else if ( o.comment_ID ) { // comment
+        var comment = o;
+        var m = markup.comment( comment );
+        if ( x.hasParent() ) {
+            var $p = x.findParent();
+            var depth = parseInt($p.attr('depth')) + 1;
+            var $m = $( m );
+            $m.attr('depth', depth);
+            $p.after( $m );
+        }
+        else {
+            post_comment_list( comment.post_ID ).prepend( m );
+        }
+    }
+};
+/**
+ *
+ * Returns jQuery object of the comment Node for x.obj
+ *
+ * @note x.obj could be many things.
+ *
+ *
+ * @return $
+ */
+x.findComment = function() {
+    var obj = x.obj;
+    if ( obj.comment_ID ) return $('.comment[comment-id="'+ comment_ID +'"]');   // WP_Object
+    else if ( isNumber( obj ) ) return $('.comment[comment-id="'+ obj +'"]');   // comment_ID
+    else if ( isjQuery( obj ) ) return obj.closest( '.comment' );                  // jQuery Object
+    else if ( isNode( obj ) ) return $(obj).closest( '.comment' );                 // Node
+    else return null;
+};
+/**
+ *
+ * Returns jQuery object of the parent comment Node for x.obj
+ *
+ * @note x.obj must be WP_Comment object.
+ *
+ * return $
+ */
+x.findParent = function() {
+    return find_comment( x.obj.comment_parent );
+};
+
+
+x.getCommentID = function () {
+    var o = x.findComment();
+    if ( o ) return o.attr('comment-id');
+    else return null;
+};
+
+
+x.getPost = function() {
+    var obj = x.obj;
+    if ( isNumber(obj) ) {
+        return $('.post[post-id="'+obj+'"]');
+    }
+    else if ( isjQuery(obj) ) {
+        return obj.closest( '.post' );
+    }
+    else if ( isNode( obj ) ) {
+        return $( obj ).closest( '.post' );
+    }
+    else return null;
+};
+
+
+
 
