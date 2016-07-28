@@ -188,3 +188,16 @@ $button-font-size: 9pt;
         }
     }
 } // eo .comment-write-form
+
+/// LIKE Button
+.buttons .no {
+    margin: 0;
+    padding: 1px 0 0 3px;
+    display: inline-block;
+    height: 1.2em;
+    width: 1.2em;
+    overflow:hidden;
+    border-radius: 50%;
+    background-color: #014c8c;
+    color: white;
+}
