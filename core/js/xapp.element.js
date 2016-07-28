@@ -29,7 +29,7 @@ var comment_edit_form = 'comment-edit-form';
 
 var comment_edit_button = 'comment-edit-button';
 var comment_delete_button = 'comment-delete-button';
-var comment_vote_button = 'comment-vote-button';
+var comment_like_button = 'comment-like-button';
 var comment_report_button = 'comment-report-button';
 var comment_copy_button = 'comment-copy-button';
 var comment_move_button = 'comment-move-button';

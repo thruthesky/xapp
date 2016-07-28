@@ -79,8 +79,24 @@ function isNumber( obj ) {
 function isBoolean( obj ) {
     return _.isBoolean( obj );
 }
+/**
+ *
+ alert( isNode(document.getElementsByTagName('a')[0]) ); // true
+ alert( isNode('<a>..</a>') );
+ alert( isNode('string') );
+ alert( isNode(1234) );
+ alert( isNode([]) );
+ alert( isNode({}) );
+
+ * @type {isNode}
+ */
 var isElement = isNode = function( obj ) {
+    /*
     if ( isEmpty(obj) ) return false;
     else if ( isjQuery( obj ) ) return false;
     else  return true;
+    */
+    /// return obj.ownerDocument.documentElement.tagName.toLowerCase() == "html";
+    return ! ( typeof obj == 'undefined' || typeof obj.nodeName == 'undefined' );
 };
+

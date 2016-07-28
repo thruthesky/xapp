@@ -66,6 +66,17 @@ A framework which has some fundamental functions to serve for app(web-app) with 
 # Coding Guide
 
 
+## x Class
+
+* x class is only for manipulating DOM of xapp.
+
+    * it shall not include function, variables, option values, etc...
+    
+    * it shall not contain methods like 'alert', 'parsing query string', 'move', 'reload', 'refresh', 'ajax', etc...
+    
+    * it really ONLY have manipulating methods only.
+    
+
 ## Element class, selector, element object
 
 for element class name holder, just use variable name - 'comment_write_button'

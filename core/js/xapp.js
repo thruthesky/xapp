@@ -249,9 +249,13 @@ x.hasParent = function () {
 };
 
 
-x.isWPComment = function() {
-    return x.obj.comment_ID;
+x.isWPPost = function() {
+    return !!x.obj.post_date;
 };
+x.isWPComment = function() {
+    return !!x.obj.comment_ID;
+};
+
 /**
  * Inserts a post or a comment in the post-list/comment-list
  *
@@ -278,9 +282,17 @@ x.insert = function() {
 
 /**
  *
+ * Replaces a comment with WP_Comment 'x.obj'
+ *
+ * @note 'x.obj' must be WP_Comment.
+ *
  */
 x.replace = function() {
-    if ( x.isWPComment() ) {
+    if ( x.isWPPost() ) {
+        // x.getPost().replaceWith( x.markup() );
+        alert('x.replace for WP_Post is not supported.')
+    }
+    else if ( x.isWPComment() ) {
         var $m = $( x.markup() );
         var $c = x.getComment();
         $m.attr('depth', $c.attr('depth'));
@@ -295,6 +307,11 @@ x.replace = function() {
  *
  * @note x.obj could be many things.
  *
+ *      - comment ID
+ *      - any Number
+ *      - jQuery object under a comment
+ *      - Node under a comment.
+ *
  *
  * @return $
  */
@@ -304,6 +321,20 @@ x.getComment = x.findComment = function() {
     else if ( isNumber( obj ) ) return $('.comment[comment-id="'+ obj +'"]');   // comment_ID
     else if ( isjQuery( obj ) ) return obj.closest( '.comment' );                  // jQuery Object
     else if ( isNode( obj ) ) return $(obj).closest( '.comment' );                 // Node
+    else return null;
+};
+
+
+/**
+ * Returns a comment ID.
+ *
+ * @note it uses x.findComment() internally, so 'x.obj' must be a proper data for x.findComment()
+ *
+ * @returns {*}
+ */
+x.getCommentID = function () {
+    var o = x.findComment();
+    if ( o ) return o.attr('comment-id');
     else return null;
 };
 
@@ -322,15 +353,22 @@ x.findParent = function() {
 };
 
 
-x.getCommentID = function () {
-    var o = x.findComment();
-    if ( o ) return o.attr('comment-id');
-    else return null;
-};
 
+/**
+ * Returns post ID.
+ * It uses x.getPost() internally. So, x.obj must be a proper data for x.getPost()
+ *
+ * @returns {*}
+ *
+ * @code
+ *   // When a button clicked on ".post", use can use like below
 
+     post_list.post_like_button_clicked = function () {
+        var post_ID = x(this).getPostID();
+     }
 
-
+ * @endcode
+ */
 x.getPostID = function () {
     return x.getPost().attr('post-id');
 };
@@ -367,6 +405,9 @@ x.getPost = function() {
     else if ( isNode( obj ) ) {
         return $( obj ).closest( '.post' );
     }
+    else if  ( x.isWPPost() ) {
+        return $('.post[post-id="'+obj.ID+'"]');
+    }
     else return null;
 };
 
@@ -374,18 +415,43 @@ x.getPost = function() {
 /**
  *
  * if x.obj is WP_Comment object, then it return HTML Markup for comment rendering.
- * if x.obj is WP_Post object, then it returns HTML Markup for post.
+ *
+ * ( 현재 x.obj 가 WP_Post instance 이면 '.post' 에 대한 HTML 문장을 리턴한다. )
+ *
+ * @attention It DOES NOT SUPPORT for '.post' because a post has a lot of things to do. a post is not only for a post itself. It redraws all the comments and other things.
+ *
+ * @code
+ *
+    x.replace = function() {
+        if ( x.isWPComment() ) {
+            var $m = $( x.markup() );
+
+        ... } }
+
+ * @endcode
+ *
+ *
  */
 x.markup = function() {
-    if ( x.isWPComment() ) {
+    if ( x.isWPPost() ) {
+        // return markup.post( x.obj );
+    }
+    else if ( x.isWPComment() ) {
         return markup.comment( x.obj );
     }
 };
 
 
-
+/**
+ *
+ * Returns true if the result of 'xforum api' is success.
+ * Otherwise, it alerts and returns false.
+ *
+ * @param re - the returned result from 'xforum api' ( xforum api 의 결과를 그대로 이 함수로 전달하면 된다. )
+ *
+ * @returns {boolean}
+ */
 x.success = function ( re ) {
-
     if ( typeof re.success == 'undefined' ) {
         xapp.alert('Server failed...', 'Malformed server response. Server script printed error.');
         return false;

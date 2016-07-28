@@ -90,13 +90,14 @@ markup.post_list_page = function ( data ) {
 
     for ( var i in posts ) {
         var post = posts[i];
-        console.log(post);
+        //console.log(post);
         var url = post.guid;
         var post_content = get_content(post);
         if ( isEmpty(post.like) ) post.like = '';
 
-
-        var item = '<div class="post" post-id="'+post.ID+'">';
+        var cls = 'post';
+        if ( post.post_title == xapp.deleted && post.post_content == xapp.deleted ) cls += ' deleted';
+        var item = '<div class="'+cls+'" post-id="'+post.ID+'">';
         item += '   <section class="display">';
         item += '       <a href="'+url+'" api="action=post_view" class="title">';
         item += '          ' + post.post_title + '';
@@ -183,14 +184,14 @@ markup.comment = function( comment ) {
         "       </div>" +
 
         '               <div class="buttons">' +
-        '                   <span class="'+comment_edit_button+'">Edit</span>' +
-        '                   <span class="'+comment_delete_button+'">Delete</span>' +
-        '                   <span class="'+comment_vote_button+'">Vote</span>' +
-        '                   <span class="'+comment_report_button+'">Report</span>' +
-        '                   <span class="'+comment_copy_button+'">Copy</span>' +
-        '                   <span class="'+comment_move_button+'">Move</span>' +
-        '                   <span class="'+comment_blind_button+'">Blind</span>' +
-        '                   <span class="'+comment_block_button+'">Block</span>' +
+        '                   <span class="'+comment_edit_button+'">edit</span>' +
+        '                   <span class="'+comment_delete_button+'">delete</span>' +
+        '                   <span class="'+comment_like_button+'">like<span class="no"></span></span>' +
+        '                   <span class="'+comment_report_button+'">report</span>' +
+        '                   <span class="'+comment_copy_button+'">copy</span>' +
+        '                   <span class="'+comment_move_button+'">move</span>' +
+        '                   <span class="'+comment_blind_button+'">blind</span>' +
+        '                   <span class="'+comment_block_button+'">block</span>' +
         '               </div>' +
         '   </div>' +
         '<div class="comment-content">' +

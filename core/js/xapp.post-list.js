@@ -48,6 +48,8 @@ $(function() {
     /// comment delete
     $body.on('click', '.'+ comment_delete_button, post_list.comment_delete_button_clicked);
 
+    /// comment like
+    $body.on('click', '.'+ comment_like_button, post_list.comment_like_button_clicked);
 
 
 
@@ -133,9 +135,17 @@ post_list.post_delete_button_clicked = function () {
         '&post_ID=' + post_ID;
     console.log(url);
     $.get(url, function(re) {
+        x.deletePost = function () {
+            var $post = x.getPost();
+            $post.find('.title').text( x.obj.post_title );
+            $post.find('.content').text( x.obj.post_content );
+            $post.addClass('deleted');
+        };
         if ( re.success  ) {
             xapp.alert("Success", "You have deleted a post.");
-            $post.remove();
+            // $post.remove();
+            //var $post = x( re.data.post ).getPost();
+            x( re.data.post ).deletePost();
         }
         else {
             xapp.alert("Failed ...", re['data']['message']);
@@ -199,8 +209,8 @@ xapp.callback_post_add_show_more = function (data) {
 
 
 post_list.post_like_button_clicked = function () {
+    var post_ID = x(this).getPostID();
     var $like_button = $(this);
-    var post_ID = x.getPostID();
     var url = xapp.server_url +
         '?forum=post_like' +
         '&response=ajax' +
@@ -210,6 +220,20 @@ post_list.post_like_button_clicked = function () {
     $.get(url, function(re) {
         if ( x.success( re ) ) $like_button.find('.no').text( re.data.like );
     } );
+};
+post_list.comment_like_button_clicked = function () {
+    var $like_button = $(this);
+    var url = xapp.server_url +
+        '?forum=comment_like' +
+        '&response=ajax' +
+        '&session_id=' + xapp.session_id +
+        '&comment_ID=' + x(this).getCommentID();
+    console.log(url);
+    $.get(url, function(re) {
+        if ( x.success( re ) ) $like_button.find('.no').text( re.data.like );
+    } );
+
+
 };
 
 

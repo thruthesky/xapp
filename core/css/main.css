@@ -31,39 +31,48 @@ body > section.page a {
     margin-bottom: 1rem;
     padding: .4rem;
     background-color: #d5dde8; }
-  .post-list-page .post {
-    margin-bottom: 1rem;
-    word-break: break-all; }
-    .post-list-page .post .display {
+
+.post {
+  margin-bottom: 1rem;
+  word-break: break-all; }
+  .post .display {
+    margin: 0 0 0.4rem;
+    padding: 0.3rem;
+    background-color: #c8d5e4; }
+  .post .meta {
+    margin: 0 0 0.4rem; }
+    .post .meta .info {
       margin: 0 0 0.4rem;
+      padding: 0.3rem; }
+    .post .meta .buttons {
       padding: 0.3rem;
-      background-color: #c8d5e4; }
-    .post-list-page .post .meta {
-      margin: 0 0 0.4rem; }
-      .post-list-page .post .meta .info {
-        margin: 0 0 0.4rem;
-        padding: 0.3rem; }
-      .post-list-page .post .meta .buttons {
-        padding: 0.3rem;
-        font-size: 9pt; }
-        .post-list-page .post .meta .buttons span {
-          cursor: pointer; }
-    .post-list-page .post .title {
-      display: block;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      font-size: 1.6rem !important;
-      color: #222; }
-      .post-list-page .post .title:hover {
-        color: #02E;
-        text-decoration: none; }
-    .post-list-page .post .content {
-      line-height: 1.4em;
-      max-height: 5.6em;
-      overflow: hidden; }
-      .post-list-page .post .content img {
-        max-width: 100%; }
+      font-size: 9pt; }
+      .post .meta .buttons span {
+        cursor: pointer; }
+  .post .title {
+    display: block;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-size: 1.6rem !important;
+    color: #222; }
+    .post .title:hover {
+      color: #02E;
+      text-decoration: none; }
+  .post .content {
+    line-height: 1.4em;
+    max-height: 5.6em;
+    overflow: hidden; }
+    .post .content img {
+      max-width: 100%; }
+
+.post.deleted .meta .post-edit-button,
+.post.deleted .meta .post-delete-button,
+.post.deleted .meta .post-like-button,
+.post.deleted .meta .post-report-button,
+.post.deleted .meta .post-copy-button,
+.post.deleted .meta .post-blind-button {
+  display: none; }
 
 .comments .buttons {
   font-size: 9pt; }
@@ -111,7 +120,12 @@ body > section.page a {
 
 .comment.deleted {
   background-color: #e6dfd4; }
-  .comment.deleted .comment-meta .buttons {
+  .comment.deleted .comment-meta .comment-edit-button,
+  .comment.deleted .comment-meta .comment-delete-button,
+  .comment.deleted .comment-meta .comment-like-button,
+  .comment.deleted .comment-meta .comment-report-button,
+  .comment.deleted .comment-meta .comment-copy-button,
+  .comment.deleted .comment-meta .comment-blind-button {
     display: none; }
 
 .post-write-form [name="content"] {
