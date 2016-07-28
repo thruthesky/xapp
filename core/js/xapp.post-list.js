@@ -34,7 +34,7 @@ $(function() {
 
     /// comment write
     $body.on('click',
-        sel(comment_write_form) + ' textarea, ' + sel(comment_write_form) + ' .fa-camera',
+        sel(comment_write_form) + ' .file-upload, ' + sel(comment_write_form) + ' textarea',
         post_list.comment_form_clicked);
     $body.on('click', sel(comment_write_button), post_list.comment_write_form_submit);
     $body.on('click', sel(comment_cancel_button), post_list.comment_cancel_form_submit);
@@ -52,6 +52,10 @@ $(function() {
     $body.on('click', '.'+ comment_like_button, post_list.comment_like_button_clicked);
 
 
+    
+
+    // $body.on('click', sl( file_upload_button ), post_list.file_upload_button_cliecked );
+    
 
 
 });
@@ -218,7 +222,10 @@ post_list.post_like_button_clicked = function () {
         '&post_ID=' + post_ID;
     console.log(url);
     $.get(url, function(re) {
-        if ( x.success( re ) ) $like_button.find('.no').text( re.data.like );
+        if ( x.success( re ) ) {
+            $like_button.find('.no').remove();
+            $like_button.append('<span class="no">'+re.data.like+'</span>');
+        }
     } );
 };
 post_list.comment_like_button_clicked = function () {
@@ -230,7 +237,10 @@ post_list.comment_like_button_clicked = function () {
         '&comment_ID=' + x(this).getCommentID();
     console.log(url);
     $.get(url, function(re) {
-        if ( x.success( re ) ) $like_button.find('.no').text( re.data.like );
+        if ( x.success( re ) ) {
+            $like_button.find('.no').remove();
+            $like_button.append('<span class="no">'+re.data.like+'</span>');
+        }
     } );
 
 
@@ -500,3 +510,45 @@ post_list.comment_delete_button_clicked = function () {
     } );
 };
 
+
+
+/// file upload
+function comment_file_upload(input) {
+
+    var $button = $(input);
+    var $form = $button.closest( 'form' );
+    $form.prop('action', xapp.file_server_url);
+    $form.prepend('<input type="hidden" name="domain" value="xapp">');
+    $form.prepend('<input type="hidden" name="uid" value="'+xapp.session_id+'">');
+    var $progress = $('<progress value="0" max="100"></progress>');
+    $form.ajaxSubmit( {
+        beforeSend: function() {
+            $form.append($progress);
+            console.log('beforeSend:');
+        },
+
+        uploadProgress: function(event, position, total, percentComplete) {
+            var percentVal = percentComplete + '%';
+            $progress.val( percentComplete );
+        },
+
+        success: function() {
+            console.log('success:');
+        },
+        complete: function(xhr) {
+            console.log('complete:');
+            var re = xhr.responseText;
+            console.log(re);
+            var data = JSON.parse( re );
+            if ( isEmpty(data.error) ) {
+                var $img = '<img src="'+data.url+'">';
+                $progress.replaceWith( $img );
+            }
+            else {
+                alert( data.error );
+            }
+        }
+    } );
+
+
+}

@@ -37,6 +37,8 @@ var comment_blind_button = 'comment-blind-button';
 var comment_block_button = 'comment-block-button';
 
 
+var file_upload_button = 'file-upload-button';
+
 
 
 

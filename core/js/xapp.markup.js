@@ -72,6 +72,7 @@ xapp.convert_categories_into_list_group_item = function ( data ) {
  * @param data
  */
 markup.post_list_page = function ( data ) {
+    if ( isEmpty(data) || isEmpty(data.posts) ) return alert("No post data. check if 'xapp.server_url' is correct.");
     var posts = data.posts;
     var page = get_page_no(data.in['page']);
     if ( _.isEmpty(posts) ) {
@@ -93,7 +94,11 @@ markup.post_list_page = function ( data ) {
         //console.log(post);
         var url = post.guid;
         var post_content = get_content(post);
-        if ( isEmpty(post.like) ) post.like = '';
+        var like_number = '';
+        if ( post.like ) {
+            like_number = '<span class="no">'+post.like+'</span>';
+        }
+
 
         var cls = 'post';
         if ( post.post_title == xapp.deleted && post.post_content == xapp.deleted ) cls += ' deleted';
@@ -112,7 +117,7 @@ markup.post_list_page = function ( data ) {
             '               <div class="buttons">' +
             '                   <span class="post-edit-button">Edit</span>' +
             '                   <span class="'+post_delete_button+'">Delete</span>' +
-            '                   <span class="'+post_like_button+'">like<span class="no">'+post.like+'</span></span>' +
+            '                   <span class="'+post_like_button+'">like'+like_number+'</span>' +
             '                   <span class="post-report-button">Report</span>' +
             '                   <span class="post-copy-button">Copy</span>' +
             '                   <span class="post-move-button">Move</span>' +
@@ -174,6 +179,10 @@ markup.comment = function( comment ) {
     if ( isEmpty(comment.depth) ) comment.depth = 0;
     var cls = 'comment';
     if ( comment.comment_content  == xapp.deleted ) cls += ' deleted';
+    var like_number = '';
+    if ( comment.like ) {
+        like_number = '<span class="no">'+comment.like+'</span>';
+    }
     return '' +
         '<div class="'+cls+'" comment-ID="'+comment.comment_ID+'" depth="'+comment.depth+'">' +
         '   <div class="comment-meta">' +
@@ -186,7 +195,7 @@ markup.comment = function( comment ) {
         '               <div class="buttons">' +
         '                   <span class="'+comment_edit_button+'">edit</span>' +
         '                   <span class="'+comment_delete_button+'">delete</span>' +
-        '                   <span class="'+comment_like_button+'">like<span class="no"></span></span>' +
+        '                   <span class="'+comment_like_button+'">like'+like_number+'</span>' +
         '                   <span class="'+comment_report_button+'">report</span>' +
         '                   <span class="'+comment_copy_button+'">copy</span>' +
         '                   <span class="'+comment_move_button+'">move</span>' +
@@ -379,8 +388,10 @@ markup.user_account_form = function() {
 
 markup.comment_write_form = function( post_ID, comment_parent ) {
     if ( typeof comment_parent == 'undefined' ) comment_parent = 0;
+
+
     var m = '<div class="'+comment_write_form+'">' +
-        '<form>' +
+        '<form enctype="multipart/form-data" action="" method="POST">' +
         '       <input type="hidden" name="content_type" value="text/plain">' +
         '   <input type="hidden" name="session_id" value="'+xapp.session_id+'">' +
         '   <input type="hidden" name="forum" value="comment_edit_submit">' +
@@ -390,7 +401,10 @@ markup.comment_write_form = function( post_ID, comment_parent ) {
         '   <table>' +
         '       <tr valign="top">' +
         '           <td>' +
-        '               <i class="fa fa-camera"></i>' +
+        '               <div class="file-upload">' +
+            '               <input type="file" name="userfile" onchange="comment_file_upload(this);">' +
+            '               <i class="fa fa-camera '+file_upload_button+'"></i>' +
+        '               </div>' +
         '           </td>' +
         '           <td width="99%">' +
         '               <textarea name="comment_content"></textarea>' +

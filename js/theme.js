@@ -13,8 +13,13 @@ if ( typeof xapp == 'undefined' ) var xapp = {};
  */
 window.xappReady = function () {
     xapp.server_url = "http://work.org/wordpress/";
-    //xapp.server_url = "http://wordpress46b1.org/";
+    xapp.server_url = "http://wordpress46b1.org/";
     //xapp.server_url = "http://dev.withcenter.com/wordpress/";
+
+
+    ///
+    xapp.file_server_url = "http://www.file-server.com/file-upload/index.php";
+
     xapp.option.cache.post_list_expire = 0;
     xapp.option.cache.post_list = false;
     xapp.start();

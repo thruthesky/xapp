@@ -201,3 +201,23 @@ $button-font-size: 9pt;
     background-color: #014c8c;
     color: white;
 }
+/// file upload button
+
+.file-upload {
+    position: relative;
+    cursor: pointer;
+    input {
+        position: absolute;
+        top:0;
+        z-index: 123;
+        width: 36px;
+        height: 32px;
+        font-size:10em;
+        overflow: hidden;
+        opacity: .5;
+        cursor: pointer;
+    }
+    .file-upload-button {
+        cursor: pointer;
+    }
+}
