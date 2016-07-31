@@ -281,6 +281,15 @@ x.insert = function() {
 };
 
 /**
+ * 'x.obj' must be WP_Comment
+ *
+ */
+x.increaseNoOfComments = function() {
+    x.getPost().find('.comments .meta .count').html( markup.get_comments_meta_count ( get_comments_meta_count(x.obj.comment_post_ID) + 1 ));
+};
+
+
+/**
  *
  * Replaces a comment with WP_Comment 'x.obj'
  *
@@ -317,11 +326,13 @@ x.replace = function() {
  */
 x.getComment = x.findComment = function() {
     var obj = x.obj;
-    if ( obj.comment_ID ) return $('.comment[comment-id="'+ obj.comment_ID +'"]');   // WP_Object
-    else if ( isNumber( obj ) ) return $('.comment[comment-id="'+ obj +'"]');   // comment_ID
-    else if ( isjQuery( obj ) ) return obj.closest( '.comment' );                  // jQuery Object
-    else if ( isNode( obj ) ) return $(obj).closest( '.comment' );                 // Node
-    else return null;
+    if ( obj ) {
+        if ( obj.comment_ID ) return $('.comment[comment-id="'+ obj.comment_ID +'"]');   // WP_Object
+        else if ( isNumber( obj ) ) return $('.comment[comment-id="'+ obj +'"]');   // comment_ID
+        else if ( isjQuery( obj ) ) return obj.closest( '.comment' );                  // jQuery Object
+        else if ( isNode( obj ) ) return $(obj).closest( '.comment' );                 // Node
+    }
+    return null;
 };
 
 
@@ -333,6 +344,7 @@ x.getComment = x.findComment = function() {
  * @returns {*}
  */
 x.getCommentID = function () {
+
     var o = x.findComment();
     if ( o ) return o.attr('comment-id');
     else return null;
@@ -392,6 +404,10 @@ x.getPostID = function () {
  *
  *              - it find the '.post' which has the post id.
  *
+ *          - WP_Post
+ *
+ *          - WP_Comment
+ *
  * @returns {*}
  */
 x.getPost = function() {
@@ -408,8 +424,39 @@ x.getPost = function() {
     else if  ( x.isWPPost() ) {
         return $('.post[post-id="'+obj.ID+'"]');
     }
+        else if (x.isWPComment() ) {
+        return $('.post[post-id="'+obj.comment_post_ID+'"]');
+    }
     else return null;
 };
+
+/**
+ * Return the parent wrapper of the form.
+ *
+ * It returns the FORM wrapper, NOT the FORM itself.
+ *
+ * x.obj can be any form. comment form, post form, login form .. etc.
+ *
+ * @see readme for DOM.
+ *
+ * x.obj can be Node or jQuery under a form.
+ *
+ * @since 2016-07-30
+ * @returns {*}
+ */
+x.getForm = function() {
+    var obj = x.obj;
+    if ( isjQuery(obj) ) {
+        return obj.closest('form').parent();
+    }
+    else if ( isNode( obj ) ) {
+        return $( obj ).closest('form').parent();
+    }
+    else alert("assert 123: no form element.");
+};
+
+
+
 
 
 /**
@@ -440,6 +487,8 @@ x.markup = function() {
         return markup.comment( x.obj );
     }
 };
+
+
 
 
 /**

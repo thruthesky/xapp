@@ -256,14 +256,24 @@ markup.post_write_form = function ( $this ) {
         '<div class="'+post_write_form+'" page-no="'+page_no+'">' +
         '   <form>' +
         '       <input type="hidden" name="do" value="post_edit_submit">' +
+        '       <input type="hidden" name="domain" value="housemaid.philgo.com">' +
         '       <input type="hidden" name="content_type" value="text/plain">' +
         '       <input type="hidden" name="response" value="ajax">' +
         '       <input type="hidden" name="slug" value="'+slug+'">' +
+        '       <input type="hidden" name="post_ID" value="">' +
         '       <input type="hidden" name="session_id" value="'+xapp.session_id+'">' +
             markup.post_form_title() +
             markup.post_form_content() +
-        '       <button type="button" class="submit btn btn-secondary btn-sm">SUBMIT</button>' +
-        '       <button type="button" class="cancel btn btn-secondary btn-sm">CANCEL</button>' +
+        '   <div class="buttons">' +
+        '       <span class="left file-upload">' +
+        '               <input type="file" name="userfile" onchange="comment_file_upload(this);">' +
+        '               <i class="fa fa-camera '+file_upload_button+'"></i>' +
+        '       </span>' +
+        '       <span class="right">' +
+        '           <button type="button" class="submit btn btn-secondary btn-sm">SUBMIT</button>' +
+        '           <button type="button" class="cancel btn btn-secondary btn-sm">CANCEL</button>' +
+        '       </span>' +
+        '   </div>' +
         '   </form>' +
         '</div>';
     return m;
@@ -284,12 +294,15 @@ markup.post_form_content = function() {
         '       </fieldset>';
 };
 
-
+/***
+ * @since 2016-08-29. post_edit_form has merged into post_write_form.
+ *
 markup.post_edit_form = function ( $post ) {
     var m = '' +
         '<div class="'+post_edit_form+'">' +
         '   <form>' +
         '       <input type="hidden" name="do" value="post_edit_submit">' +
+        '       <input type="hidden" name="domain" value="housemaid.philgo.com">' +
         '       <input type="hidden" name="content_type" value="text/plain">' +
         '       <input type="hidden" name="response" value="ajax">' +
         '       <input type="hidden" name="post_ID" value="">' +
@@ -306,6 +319,7 @@ markup.post_edit_form = function ( $post ) {
     return m;
 
 };
+ */
 
 
 
@@ -383,21 +397,41 @@ markup.user_account_form = function() {
 };
 
 
-
-
-
+/**
+ *
+ * post_ID 가 '.comment' 객체이면 코멘트 수정이다.
+ *
+ * @param post_ID
+ * @param comment_parent
+ * @returns {string}
+ */
 markup.comment_write_form = function( post_ID, comment_parent ) {
-    if ( typeof comment_parent == 'undefined' ) comment_parent = 0;
 
+    var cls = comment_write_form;
+    if ( isjQuery(post_ID) ) {
+        var $comment = post_ID;
+        var comment_ID = $comment.attr('comment-ID');
+        var content = $comment.find('.comment-content').text();
+        post_ID = '';
+        comment_parent = '';
+        cls += ' selected';
+    }
+    else {
+        if ( typeof comment_parent == 'undefined' ) comment_parent = 0;
+        comment_ID = '';
+        content = '';
+    }
 
-    var m = '<div class="'+comment_write_form+'">' +
+    var m = '<div class="'+cls+'">' +
         '<form enctype="multipart/form-data" action="" method="POST">' +
-        '       <input type="hidden" name="content_type" value="text/plain">' +
-        '   <input type="hidden" name="session_id" value="'+xapp.session_id+'">' +
         '   <input type="hidden" name="forum" value="comment_edit_submit">' +
+    '       <input type="hidden" name="content_type" value="text/plain">' +
+    '       <input type="hidden" name="domain" value="housemaid.philgo.com">' +
+    '   <input type="hidden" name="session_id" value="'+xapp.session_id+'">' +
         '   <input type="hidden" name="response" value="ajax">' +
         '   <input type="hidden" name="post_ID" value="'+ post_ID +'">' +
         '   <input type="hidden" name="comment_parent" value="'+ comment_parent +'">' +
+        '   <input type="hidden" name="comment_ID" value="'+ comment_ID +'">' +
         '   <table>' +
         '       <tr valign="top">' +
         '           <td>' +
@@ -407,7 +441,7 @@ markup.comment_write_form = function( post_ID, comment_parent ) {
         '               </div>' +
         '           </td>' +
         '           <td width="99%">' +
-        '               <textarea name="comment_content"></textarea>' +
+        '               <textarea name="comment_content">'+content+'</textarea>' +
         '           </td>' +
         '       </tr>' +
         '       <tr>' +
@@ -422,15 +456,21 @@ markup.comment_write_form = function( post_ID, comment_parent ) {
         '</div>';
     return m;
 };
+
+/**
+ *
+ * @since 2016-07-29 comment edit merged into comment write.
+
 markup.comment_edit_form = function ( $comment ) {
     var comment_ID = $comment.attr('comment-ID');
     var content = $comment.find('.comment-content').text();
     var m = '' +
         '<div class="'+comment_edit_form+'">' +
         '   <form>' +
+        '       <input type="hidden" name="forum" value="comment_edit_submit">' +
+        '       <input type="hidden" name="domain" value="housemaid.philgo.com">' +
         '       <input type="hidden" name="content_type" value="text/plain">' +
         '       <input type="hidden" name="session_id" value="'+xapp.session_id+'">' +
-        '       <input type="hidden" name="forum" value="comment_edit_submit">' +
         '       <input type="hidden" name="response" value="ajax">' +
         '       <input type="hidden" name="comment_ID" value="'+ comment_ID +'">' +
         '   <table>' +
@@ -456,4 +496,5 @@ markup.comment_edit_form = function ( $comment ) {
         '</div>';
     return m;
 };
+*/
 

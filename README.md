@@ -63,6 +63,42 @@ A framework which has some fundamental functions to serve for app(web-app) with 
 * access the index.html with "file://" scheme like "file:///C:/work/www/wordpress46b1/wp-content/plugins/xforum/tmp/xapp/index.html"
  
 
+
+# DOM Structure of xapp
+
+* All element must have only wrapper element.
+
+For instance,
+
+    * FORM must have a wrapper like "<div><form></form></form>"
+    
+    * Title, content, button and all other element must have a wrapper element.
+    
+        * For title,
+        
+            <div class=wrapper><div class=title>...</div></div>
+    
+        * Buttons 
+            <div class=wrapper>
+                <div class=buttons>
+                    <div class=wrapper>
+                        <button>
+
+* Functions of x works on the wrapper element.
+
+    * for instance, when it gets an element for a FORM, it gets the wrapper which includes the FORM tag.
+    
+    * so, when you submit the form, you need to
+    
+        x.getForm().find('form').submit()
+        
+        or
+        
+        x.submit();
+        
+
+
+
 # Coding Guide
 
 
@@ -246,6 +282,13 @@ post-copy-button for Copy
 post-move-button for Move
 post-blind-button for Blind
 post-block-button for Block
+
+
+
+## Permission
+
+
+* even though you are admin, you cannot edit other's post if you use ssesion_id.
 
 
 

@@ -28,12 +28,16 @@ if ( typeof xapp == 'undefined' ) var xapp = {};
  */
 xapp.callback_endless_post_list = function( re ) { // Callback for display post data on device.
     // console.log( re );
-    var m = markup.post_list_page( re.data );
-    layout.main().append( m );
-    setTimeout(function() {
-        xapp.callback_endless_finish_loading();
-        xapp.callback_post_add_show_more(re.data);
-    }, 20);
+    if (x.success( re ) ) {
+        xapp.file_server_url = re.data.file_server_url;
+        // alert(xapp.file_server_url);
+        var m = markup.post_list_page( re.data );
+        layout.main().append( m );
+        setTimeout(function() {
+            xapp.callback_endless_finish_loading();
+            xapp.callback_post_add_show_more(re.data);
+        }, 20);
+    }
 };
 
 

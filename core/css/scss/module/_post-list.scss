@@ -146,12 +146,20 @@ $button-font-size: 9pt;
 /// POST WRITE FORM
 .post-write-form {
     @include post-form;
+    .buttons {
+        overflow: auto;
+        .file-upload { display:block; padding: 4px;}
+        .file-upload-button { padding-left: 4px; font-size: 18pt;}
+        .left {
+            float:left;
+        }
+        .right {
+            float:right;
+        }
+    }
 }
 
-/// POST EDIT FORM
-.post-edit-form {
-    @include post-form;
-}
+
 
 /// COMMENT EDIT FORM
 .comment-edit-form {

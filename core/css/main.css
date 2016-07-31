@@ -20,7 +20,7 @@ body > section.page a {
 .page-content {
   background-color: #f3f3f3; }
 
-.post-write-form, .post-edit-form, .comment-edit-form {
+.post-write-form, .comment-edit-form {
   margin: 0  0 .2rem;
   padding: .3rem;
   background-color: grey; }
@@ -130,9 +130,18 @@ body > section.page a {
 
 .post-write-form [name="content"] {
   height: 10em; }
-
-.post-edit-form [name="content"] {
-  height: 10em; }
+.post-write-form .buttons {
+  overflow: auto; }
+  .post-write-form .buttons .file-upload {
+    display: block;
+    padding: 4px; }
+  .post-write-form .buttons .file-upload-button {
+    padding-left: 4px;
+    font-size: 18pt; }
+  .post-write-form .buttons .left {
+    float: left; }
+  .post-write-form .buttons .right {
+    float: right; }
 
 .comment-edit-form [name="comment_content"] {
   width: 100%;

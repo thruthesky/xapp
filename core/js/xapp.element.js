@@ -17,7 +17,10 @@ var el = ele = function ( cls ) {
 
 var post_write_form = 'post-write-form';
 var post_write_button = 'post-write-button';
-var post_edit_form = 'post-edit-form';
+
+// var post_edit_form = 'post-edit-form'; // @deprecated
+
+
 var post_edit_button = 'post-edit-button';
 var post_delete_button = 'post-delete-button';
 var post_like_button = 'post-like-button';
@@ -80,14 +83,9 @@ var comments_meta_count = function( post_ID ) {
  * @returns int
  */
 var get_comments_meta_count = function ( post_ID ) {
-    var m = comments_meta_count( post_ID );
-    var $m = $( m );
-    if ( $m.find('.no-comment').length ) {
-        return 0;
-    }
-    else {
-        return parseInt( $m.find('.no').text() );
-    }
+    var $m = comments_meta_count( post_ID );
+    if ( $m.find('.no').length ) return parseInt( $m.find('.no').text() );
+    else return 0;
 };
 
 
